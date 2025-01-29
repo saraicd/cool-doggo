@@ -1,4 +1,12 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+<p align="center">
+  <img src="./public/cool-doggo.png" alt="Image Alt Text" />
+</p>
+
+## Cool Doggo
+
+Cool Doggo wasn’t just any dog—he was the coolest doggo in town. Whether he was skateboarding down the boardwalk, catching frisbees mid-air, or charming café-goers with his impeccable manners, everyone knew Cool Doggo. He had a swagger in his step and a wag in his tail that made even the grumpiest of passersby crack a smile.
+
 
 ## Getting Started
 
@@ -20,14 +28,12 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+## About this repository
 
-To learn more about Next.js, take a look at the following resources:
+This inspires to be a testing space for some technologies, where I also aim to showcase some other competencies. For now you can check:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Behance](https://www.behance.net/GuidaSMoranes) - get to know my alter ego Guida S. Moranes through her illustrations.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
 ## Deploy on Vercel
 
