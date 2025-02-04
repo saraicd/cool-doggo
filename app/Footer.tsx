@@ -1,4 +1,5 @@
-import Image from "next/image";
+import BehanceIcon from "./../public/behance.svg";
+import LinkedinIcon from "./../public/linkedin.svg";
 
 export default function Footer(){
 
@@ -12,27 +13,17 @@ export default function Footer(){
         href="https://www.behance.net/GuidaSMoranes"
         target="_blank"
         rel="noopener noreferrer"
-        className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+        className="flex items-center gap-2 hover:underline hover:underline-offset-4 image "
       >
-        <Image
-          src="/behance.svg"
-          alt="Behance icon"
-          width={28}
-          height={24}
-        />
+        <BehanceIcon/>
       </a>
       <a
         href="https://www.linkedin.com/in/sara-domingues-b73b8985/"
         target="_blank"
         rel="noopener noreferrer"
-        className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+        className="flex items-center gap-2 hover:underline hover:underline-offset-4 image"
       >
-        <Image
-          src="/linkedin.svg"
-          alt="LinkedIn icon"
-          width={24}
-          height={24}
-        />
+        <LinkedinIcon/>
       </a>
     </footer>
   )

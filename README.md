@@ -11,7 +11,7 @@ Up to this day, Doggo is waiting for his story to be written and unfolded.
 
 ## About this repository
 
-This inspires to be a testing space for some technologies, where I also aim to showcase some other competencies. 
+This aspires to be a testing space for some technologies, where I also aim to showcase some other competencies.
 
 For now you can check:
 

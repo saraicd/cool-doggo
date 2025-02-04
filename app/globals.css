@@ -19,3 +19,21 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.image {
+  fill:  var(--foreground);
+}
+
+/* Home Page */
+.fixed-image {
+  width: 120px;
+  position: fixed;
+  top: -80px;
+  left: 50px;
+  z-index: 1000;
+}
+
+.fixed-image:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}
