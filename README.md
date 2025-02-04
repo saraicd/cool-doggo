@@ -5,7 +5,17 @@
 
 ## Cool Doggo
 
-Cool Doggo wasn’t just any dog—he was the coolest doggo in town. Whether he was skateboarding down the boardwalk, catching frisbees mid-air, or charming café-goers with his impeccable manners, everyone knew Cool Doggo. He had a swagger in his step and a wag in his tail that made even the grumpiest of passersby crack a smile.
+Cool Doggo wasn’t just any dog—he was effortlessly cool. He roamed the city, turning heads wherever he went. When he wasn’t mastering kickflips at the skate park, he could be found lounging at the local café, pretending to read Camus while secretly hoping for belly rubs. Life was a grand adventure, and Cool Doggo knew that the best way to deal with the mysteries of existence was with a wagging tail and a well-timed nap in the sun.
+
+Up to this day, Doggo is waiting for his story to be written and unfolded.
+
+## About this repository
+
+This inspires to be a testing space for some technologies, where I also aim to showcase some other competencies. 
+
+For now you can check:
+
+- [Behance](https://www.behance.net/GuidaSMoranes) - get to know my alter ego Guida S. Moranes through her illustrations.
 
 
 ## Getting Started
@@ -24,19 +34,3 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## About this repository
-
-This inspires to be a testing space for some technologies, where I also aim to showcase some other competencies. For now you can check:
-
-- [Behance](https://www.behance.net/GuidaSMoranes) - get to know my alter ego Guida S. Moranes through her illustrations.
-
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
