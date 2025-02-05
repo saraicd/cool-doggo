@@ -1,12 +1,12 @@
 "use client";
-import { createContext, useContext, useState } from 'react';
+import { createContext, ReactNode, useContext, useState } from 'react';
 
 const ThemeContext = createContext({
   isDarkMode: false,
   toggleTheme: () => {},
 });
 
-export const ThemeProvider = ({ children }: any) => {
+export const ThemeProvider = ({ children }: {children: ReactNode}) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const toggleTheme = () => {
