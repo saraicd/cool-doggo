@@ -13,9 +13,9 @@ Up to this day, Doggo is waiting for his story to be written and unfolded.
 
 This aspires to be a testing space for some technologies, where I also aim to showcase some other competencies.
 
-For now you can check:
+It's a work in progress, but you can check it out:
 
-- [Behance](https://www.behance.net/GuidaSMoranes) - get to know my alter ego Guida S. Moranes through her illustrations.
+- [Cool Doggo](https://www.cooldoggo.com) - get to know my alter ego Guida S. Moranes through her illustrations.
 
 
 ## Getting Started
