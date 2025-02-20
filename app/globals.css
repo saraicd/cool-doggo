@@ -24,6 +24,10 @@ body {
   fill:  var(--foreground);
 }
 
+.main-text {
+  color:  var(--foreground);
+}
+
 /* Home Page */
 .fixed-image {
   width: 120px;
