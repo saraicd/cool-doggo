@@ -40,7 +40,7 @@ const Quote = () => {
             <div className="flex flex-col items-center justify-center">
                 {advice && (
                     <p className="mt-4 text-lg main-text">
-                        "{advice}"
+                        &quot;{advice}&quot;
                     </p>
                 )}
             </div>
