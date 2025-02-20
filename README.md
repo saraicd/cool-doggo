@@ -11,14 +11,28 @@ Up to this day, Doggo is waiting for his story to be written and unfolded.
 
 ## About this repository
 
-This aspires to be a testing space for some technologies, where I also aim to showcase some other competencies.
+This aspires to be a testing space for some technologies and frameworks, where I also aim to showcase some other competencies.
 
 It's a work in progress, but you can check it out here [Cool Doggo](https://www.cooldoggo.com).
 
+## Frameworks
+- [React](https://nextjs.org/).
 
-## Getting Started
+## Libraries
+- [React](https://www.https://www.npmjs.com/package/react).
+- [Motion for React](https://www.npmjs.com/package/framer-motion).
 
-First, run the development server:
+## APIs
+- [Advice Slip JSON API](https://api.adviceslip.com/).
+
+## Getting Started on your Local Environment
+For the npm version 20 run
+
+```bash
+nvm install 20
+```
+
+For running the development server:
 
 ```bash
 npm run dev
