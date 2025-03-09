@@ -13,6 +13,7 @@ export default function Lamp(){
       drag
       dragConstraints={{ top: -1000, bottom: 80, left: 0, right: 0 }}
       className="fixed-image image"
+      whileHover={{ scale: 1.1 }} 
       onClick={ () => {
         toggleTheme();
       }}
