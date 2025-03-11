@@ -3,22 +3,41 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #171717;
+  --foreground: #ffffff;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+} */
 
 body {
+  display: block;
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+  overflow: hidden;
+  cursor: url("https://github.com/chenglou/react-motion/raw/master/demos/demo8-draggable-list/cursor.png") 39 39, auto;
 }
+
+h1 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: min(12vw, 14em);
+  line-height: 0.85em;
+  color:  var(--foreground);
+}
+
+h2 {
+  font-weight: 400;
+  font-size: min(5vw, 10em);
+  line-height: 0.60em;
+  color:  var(--foreground);
+}
+
 
 .image {
   fill:  var(--foreground);
