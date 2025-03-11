@@ -5,15 +5,6 @@ import { Environment, Lightformer } from "@react-three/drei"
 
 const data = Array.from({ length: 200 }, () => ({ color: "white", scale: 0.25 + Math.random() }))
 
-function Striplight(props: any) {
-    return (
-      <mesh {...props}>
-        <boxGeometry />
-        <meshBasicMaterial color="white" />
-      </mesh>
-    )
-  }
-
 export const ThreeD = () => (
   <div className="h-full">
     <Canvas 

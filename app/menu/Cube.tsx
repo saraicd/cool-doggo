@@ -1,7 +1,7 @@
 import {  useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import { Mesh } from "three";
-import { useGLTF, PerspectiveCamera, OrbitControls } from "@react-three/drei";
+import { useGLTF, OrbitControls } from "@react-three/drei";
 
 export default function Cube(){
     const cubeRef = useRef<Mesh>(null);
