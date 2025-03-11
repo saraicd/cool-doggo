@@ -4,7 +4,7 @@ import LinkedinIcon from "./../public/linkedin.svg";
 export default function Footer(){
 
   return (
-    <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
+    <footer className="fixed bottom-0 left-0 w-full shadow-md flex gap-6 flex-wrap items-center justify-center py-4">
       <div className="text-center mt-4">
         <p className="text-xs text-black-600">Created by Sara Domingues</p>
         <p className="text-xs text-gray-600">Web Developer and Illustrator</p>
