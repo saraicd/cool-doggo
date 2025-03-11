@@ -1,8 +1,7 @@
-import { useLayoutEffect, useMemo, useRef } from "react"
+import { useLayoutEffect, useMemo } from "react"
 import { Canvas, useFrame, useThree } from "@react-three/fiber"
 import { Physics, usePlane, useSphere } from "@react-three/cannon"
-import { Environment, Float, Lightformer, OrbitControls } from "@react-three/drei"
-import * as THREE from 'three';
+import { Environment, Lightformer } from "@react-three/drei"
 
 const data = Array.from({ length: 200 }, () => ({ color: "white", scale: 0.25 + Math.random() }))
 

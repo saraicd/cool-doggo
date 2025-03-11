@@ -1,6 +1,5 @@
 "use client";
 import { motion } from 'framer-motion';
-import CoolDoggoHome from "./../public/cool-doggo_HOME.svg";
 import CoolDoggoText from "./../public/cool-doggo_TEXT.svg";
 import { useRouter } from "next/navigation";
 
