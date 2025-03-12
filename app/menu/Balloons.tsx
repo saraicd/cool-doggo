@@ -1,11 +1,14 @@
-import { useLayoutEffect, useMemo } from "react"
-import { Canvas, useFrame, useThree } from "@react-three/fiber"
-import { Physics, usePlane, useSphere } from "@react-three/cannon"
-import { Environment, Lightformer } from "@react-three/drei"
+import { useLayoutEffect, useMemo } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Physics, usePlane, useSphere } from "@react-three/cannon";
+import { Environment, Lightformer } from "@react-three/drei";
+import { useTheme } from "./../ThemeProvider";
 
 const data = Array.from({ length: 200 }, () => ({ color: "white", scale: 0.25 + Math.random() }))
 
-export const ThreeD = () => (
+export const Balloons = ({freeBalloons}: {freeBalloons: boolean}) => {
+
+  return (
   <div className="h-full">
     <Canvas 
         gl={{ alpha: true, stencil: false, depth: false, antialias: false }} 
@@ -34,28 +37,32 @@ export const ThreeD = () => (
         <Physics gravity={[0, -1, 0]}>
             <group position={[0, 0, -10]}>
                 <Mouse />
-                <Borders />
+                <Borders removeBallonPlane={freeBalloons}/>
                 <InstancedSpheres />
             </group>
         </Physics>
         
     </Canvas>
   </div>
-)
+)}
 
-function InstancedSpheres({ count = 100 }) {
+function InstancedSpheres() {
+  const { isDarkMode } = useTheme();
   const { viewport } = useThree()
+  const count = viewport.width >6 ? 200 : 80;
+  console.log(viewport.width)
 
   const [ref, api] = useSphere((index) => ({
-    mass: data[index].scale * 100,
+    mass: data[index].scale * 100000,
     position: [
-        Math.random() * viewport.width - viewport.width / 2,  // Random x-position within the viewport
-        Math.random() * viewport.height - viewport.height / 2, // Random y-position within the viewport
-        Math.random() * 10 - 5,  // Random z-position (depth)
+        Math.random() * viewport.width - viewport.width / 2, 
+        Math.random() * viewport.height - viewport.height / 2, 
+        Math.random() * 10 - 5,  
     ],
     args: [1],
   }))
-  const colorArray = useMemo(() => new Float32Array(count * 3).fill(1), [count])
+  const balloonColor = isDarkMode ? 0 : 1;
+  const colorArray = useMemo(() => new Float32Array(count * 3).fill(balloonColor), [count])
   useLayoutEffect(() => {
     for (let i = 0; i < count; i++) api.at(i).scaleOverride([data[i].scale, data[i].scale, data[i].scale])
   }, [])
@@ -64,16 +71,17 @@ function InstancedSpheres({ count = 100 }) {
       <sphereGeometry args={[1, 64, 64]}>
         <instancedBufferAttribute attach="attributes-color" args={[colorArray, 3]} />
       </sphereGeometry>
-      <meshStandardMaterial toneMapped={false} metalness={0.3} roughness={0.4}   />
+      <meshStandardMaterial toneMapped={false} metalness={0.3} roughness={0.4} vertexColors  />
     </instancedMesh>
   )
 }
 
-function Borders() {
+function Borders({removeBallonPlane}: {removeBallonPlane: boolean}) {
+  console.log(removeBallonPlane,"freeballons")
   const { viewport } = useThree()
   return (
     <>
-      <Plane position={[0, -viewport.height / 2, 0]} rotation={[-Math.PI / 2, 0, 0]} />
+      {!removeBallonPlane && <Plane position={[0, -viewport.height / 2, 0]} rotation={[-Math.PI / 2, 0, 0]} />}
       <Plane position={[-viewport.width / 2 - 1, 0, 0]} rotation={[0, Math.PI / 2, 0]} />
       <Plane position={[viewport.width / 2 + 1, 0, 0]} rotation={[0, -Math.PI / 2, 0]} />
       <Plane position={[0, 0, -1]} rotation={[0, 0, 0]} />
