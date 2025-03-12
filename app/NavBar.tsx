@@ -1,6 +1,6 @@
 "use client";
 import { motion } from 'framer-motion';
-import CoolDoggoText from "./../public/cool-doggo_TEXT.svg";
+import CoolDoggoLogo from "./../public/cool-doggo_SIMPLE.svg";
 import { useRouter } from "next/navigation";
 
 const Navbar = () => {
@@ -18,11 +18,11 @@ const Navbar = () => {
       transition={{ duration: 0.5 }}
     >
         <motion.svg
-            className="image cursor-pointer  h-7 justify-end"
+            className="image cursor-pointer  w-12 h-12 justify-end"
             whileHover={{ scale: 1.1 }} 
             onClick={handleClick}
         >
-            <CoolDoggoText  />
+            <CoolDoggoLogo  />
         </motion.svg>
         {/* <motion.svg
             className="image cursor-pointer w-10 h-7 "

@@ -2,7 +2,7 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
 
 const ThemeContext = createContext({
-  isDarkMode: false,
+  isDarkMode: true,
   toggleTheme: () => {},
 });
 
