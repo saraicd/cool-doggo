@@ -4,8 +4,6 @@ import { Physics, usePlane, useSphere } from "@react-three/cannon";
 import { Environment, Lightformer } from "@react-three/drei";
 import { useTheme } from "../ThemeProvider";
 
-const data = Array.from({ length: 200 }, () => ({ color: "white", scale: 0.25 + Math.random() }))
-
 const CameraShake = ({ trigger }: { trigger: boolean }) => {
   const [shake, setShake] = useState<[number, number, number]>([0, 0, 100]);
 
@@ -92,7 +90,7 @@ function InstancedSpheres() {
   const count = viewport.width >6 ? 200 : 120;
   console.log(viewport.width)
 
-  const [ref, api] = useSphere((index) => ({
+  const [ref, api] = useSphere(() => ({
     mass: 0.25 * 100000,
     position: [
         Math.random() * viewport.width - viewport.width / 2, 
