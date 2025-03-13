@@ -1,5 +1,6 @@
 import BehanceIcon from "./../public/behance.svg";
 import LinkedinIcon from "./../public/linkedin.svg";
+import GitHubIcon from "./../public/gitHub.svg";
 
 export default function Footer(){
 
@@ -26,6 +27,15 @@ export default function Footer(){
         aria-label="Linkedin"
       >
         <LinkedinIcon/>
+      </a>
+      <a
+        href="https://github.com/saraicd/cool-doggo/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-2 hover:underline hover:underline-offset-4 image"
+        aria-label="GitHub"
+      >
+        <GitHubIcon/>
       </a>
     </footer>
   )
