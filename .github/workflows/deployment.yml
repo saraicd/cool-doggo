@@ -2,7 +2,7 @@ name: Deployment
 on:
   push:
     branches:
-      - main
+      - staging
 jobs:
   testing:
     runs-on: ubuntu-latest
@@ -24,18 +24,15 @@ jobs:
 
       - name: Run tests
         run: npm test --if-present
-  deploy:
+deploy:
     needs: testing
     runs-on: ubuntu-latest
     steps:
       - name: Get Code
         uses: actions/checkout@v3
 
-      - name: Install Vercel CLI
-        run: npm install -g vercel
-
-      - name: Link Vercel Project
-        run: vercel link --yes --token ${{ secrets.VERCEL_TOKEN }}
-
-      - name: Deploy to Vercel
-        run: vercel --prod --yes --token ${{ secrets.VERCEL_TOKEN }}
+      - name: Push to Main Branch
+        run: |
+          git checkout main
+          git merge staging --no-ff -m "Merge staging into main"
+          git push origin main
