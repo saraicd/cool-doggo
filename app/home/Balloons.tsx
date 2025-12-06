@@ -1,8 +1,14 @@
+"use client";
 import { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Physics, usePlane, useSphere } from "@react-three/cannon";
 import { Environment, Lightformer } from "@react-three/drei";
 import { useTheme } from "../ThemeProvider";
+
+const getDevicePixelRatio = () => {
+  if (typeof window === "undefined") return 1;
+  return Math.min(window.devicePixelRatio, 2);
+};
 
 const CameraShake = ({ trigger }: { trigger: boolean }) => {
   const [shake, setShake] = useState<[number, number, number]>([0, 0, 100]);
@@ -63,7 +69,7 @@ export const Balloons = ({ freeBalloons }: { freeBalloons: boolean }) => {
         }}
         orthographic
         camera={{ position: [0, 0, 100], zoom: 100 }}
-        dpr={Math.min(window.devicePixelRatio, 2)} // Limit pixel ratio for performance
+        dpr={getDevicePixelRatio()} // Limit pixel ratio for performance
         performance={{ min: 0.5 }} // Allow lower frame rates when needed
       >
         <CameraShake trigger={freeBalloons} />
