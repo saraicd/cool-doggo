@@ -22,6 +22,7 @@ It's a work in progress, but you can check it out here [Cool Doggo](https://www.
 - [React](https://www.https://www.npmjs.com/package/react).
 - [Motion for React](https://www.npmjs.com/package/framer-motion).
 - [React Three Fiber](https://r3f.docs.pmnd.rs/).
+- [React Three Drei](https://drei.docs.pmnd.rs/).
 
 ## APIs
 - [Advice Slip JSON API](https://api.adviceslip.com/).
