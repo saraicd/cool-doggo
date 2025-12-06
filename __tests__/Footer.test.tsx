@@ -17,7 +17,7 @@ describe("Footer Component", () => {
     expect(screen.getByText("Web Developer and Illustrator")).toBeInTheDocument();
   });
 
-  it("renders the Behance and LinkedIn links", () => {
+  it("renders all the icon links", () => {
     render(<Footer />);
     expect(screen.getByRole("link", { name: /behance/i })).toHaveAttribute(
       "href",
@@ -26,6 +26,10 @@ describe("Footer Component", () => {
     expect(screen.getByRole("link", { name: /linkedin/i })).toHaveAttribute(
       "href",
       "https://www.linkedin.com/in/sara-domingues-b73b8985/"
+    );
+    expect(screen.getByRole("link", { name: /github/i })).toHaveAttribute(
+      "href",
+      "https://github.com/saraicd/cool-doggo/"
     );
   });
 

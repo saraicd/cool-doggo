@@ -24,13 +24,6 @@ const Navbar = () => {
         >
             <CoolDoggoLogo  />
         </motion.svg>
-        {/* <motion.svg
-            className="image cursor-pointer w-10 h-7 "
-            whileHover={{ scale: 1.1 }} 
-            onClick={handleClick}
-        >
-            <CoolDoggoHome  />
-        </motion.svg> */}
     </motion.nav>
   );
 };

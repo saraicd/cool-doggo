@@ -16,11 +16,12 @@ This aspires to be a testing space for some technologies and frameworks, where I
 It's a work in progress, but you can check it out here [Cool Doggo](https://www.cooldoggo.com).
 
 ## Frameworks
-- [React](https://nextjs.org/).
+- [Next](https://nextjs.org/).
 
 ## Libraries
 - [React](https://www.https://www.npmjs.com/package/react).
 - [Motion for React](https://www.npmjs.com/package/framer-motion).
+- [React Three Fiber](https://r3f.docs.pmnd.rs/).
 
 ## APIs
 - [Advice Slip JSON API](https://api.adviceslip.com/).
