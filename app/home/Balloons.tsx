@@ -10,37 +10,6 @@ const getDevicePixelRatio = () => {
   return Math.min(window.devicePixelRatio, 2);
 };
 
-const CameraShake = ({ trigger }: { trigger: boolean }) => {
-  const [shake, setShake] = useState<[number, number, number]>([0, 0, 100]);
-
-  useEffect(() => {
-    if (trigger) {
-      let i = 0;
-      const interval = setInterval(() => {
-        setShake([
-          (Math.random() - 0.5) * 1.5,
-          (Math.random() - 0.5) * 1.5,
-          100,
-        ]);
-        i++;
-        if (i > 4) {
-          clearInterval(interval);
-          setShake([0, 0, 100]);
-        }
-      }, 70);
-
-      // Cleanup function
-      return () => clearInterval(interval);
-    }
-  }, [trigger]);
-
-  useFrame(({ camera }) => {
-    camera.position.set(shake[0], shake[1], shake[2]);
-  });
-
-  return null;
-};
-
 export const Balloons = ({ freeBalloons }: { freeBalloons: boolean }) => {
   const [lightIntensity, setLightIntensity] = useState(2);
 
@@ -72,7 +41,6 @@ export const Balloons = ({ freeBalloons }: { freeBalloons: boolean }) => {
         dpr={getDevicePixelRatio()} // Limit pixel ratio for performance
         performance={{ min: 0.5 }} // Allow lower frame rates when needed
       >
-        <CameraShake trigger={freeBalloons} />
         <Environment resolution={256}>
           <Lightformer
             intensity={lightIntensity}
