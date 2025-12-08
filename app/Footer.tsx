@@ -4,7 +4,7 @@ import GitHubIcon from "./../public/gitHub.svg";
 
 export default function Footer() {
   return (
-    <footer className=" bottom-0 left-0 w-full shadow-md flex gap-6 flex-wrap items-center justify-center py-4">
+    <footer className=" bottom-0 left-0 w-full flex gap-6 flex-wrap items-center justify-center py-4">
       <a
         href="https://www.behance.net/GuidaSMoranes"
         target="_blank"

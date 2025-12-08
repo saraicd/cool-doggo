@@ -8,6 +8,7 @@ import BehanceIcon from "./../public/behance.svg";
 import LinkedinIcon from "./../public/linkedin.svg";
 import GitHubIcon from "./../public/gitHub.svg";
 import Footer from "./Footer";
+import Button from "./components/Button";
 
 const Navbar = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -19,6 +20,7 @@ const Navbar = () => {
     { name: "Home", path: "/home" },
     { name: "Cool Story", path: "/cool-story" },
     { name: "About", path: "/cool-story/about" },
+    { name: "Store", path: "/store" },
   ];
 
   const handleNavigate = (path: string) => {
@@ -73,12 +75,14 @@ const Navbar = () => {
                       <motion.button
                         onClick={() => handleNavigate(item.path)}
                         className={`w-full flex items-center justify-center px-4 py-3 transition-all  ${
-                          isActive ? " text-white" : " dark:text-purple-300  "
+                          isActive
+                            ? "text-purple-400"
+                            : " text-black dark:text-white"
                         }`}
                         whileHover={{ scale: 1.05 }}
                         transition={{ duration: 0.2 }}
                       >
-                        <span className="font-semibold text-sm whitespace-nowrap">
+                        <span className=" text-sm whitespace-nowrap">
                           {item.name}
                         </span>
                       </motion.button>
@@ -100,16 +104,14 @@ const Navbar = () => {
               transition={{ duration: 0.2 }}
               className="p-3"
             >
-              <motion.button
+              <Button
                 onClick={toggleTheme}
-                className="w-full flex items-center justify-center px-4 py-3 rounded-xl bg-purple-100/50 dark:bg-purple-900/30 hover:bg-purple-200/70 dark:hover:bg-purple-800/50 transition-colors mb-4"
-                whileHover={{ x: 4 }}
-                transition={{ duration: 0.2 }}
+                variant="secondary"
+                size="sm"
+                className="w-full mb-4"
               >
-                <span className="font-semibold text-sm text-purple-700 dark:text-purple-300 whitespace-nowrap">
-                  {isDarkMode ? "Light Mode" : "Dark Mode"}
-                </span>
-              </motion.button>
+                {isDarkMode ? "Light Mode" : "Dark Mode"}
+              </Button>
               <Footer />
             </motion.div>
           )}

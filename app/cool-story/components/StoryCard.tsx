@@ -51,7 +51,7 @@ export default function StoryCard({ story, index }: StoryCardProps) {
         <div
           className={`p-6 rounded-2xl border transition-all h-64 flex flex-col ${
             isActive
-              ? "border-purple-500 hover:border-purple-600 hover:shadow-lg cursor-pointer backdrop-blur-md bg-purple-50/50 dark:bg-purple-900/20"
+              ? "border-purple-500 hover:border-purple-600 hover:shadow-lg cursor-pointer backdrop-blur-md bg-purple-900/20 dark:bg-purple-900/20"
               : "border-purple-500 dark:border-gray-600 opacity-60 cursor-not-allowed backdrop-blur-md bg-purple-50/50 dark:bg-gray-900"
           }`}
           onClick={handleCardClick}
