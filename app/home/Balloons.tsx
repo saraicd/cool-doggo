@@ -10,37 +10,6 @@ const getDevicePixelRatio = () => {
   return Math.min(window.devicePixelRatio, 2);
 };
 
-const CameraShake = ({ trigger }: { trigger: boolean }) => {
-  const [shake, setShake] = useState<[number, number, number]>([0, 0, 100]);
-
-  useEffect(() => {
-    if (trigger) {
-      let i = 0;
-      const interval = setInterval(() => {
-        setShake([
-          (Math.random() - 0.5) * 1.5,
-          (Math.random() - 0.5) * 1.5,
-          100,
-        ]);
-        i++;
-        if (i > 4) {
-          clearInterval(interval);
-          setShake([0, 0, 100]);
-        }
-      }, 70);
-
-      // Cleanup function
-      return () => clearInterval(interval);
-    }
-  }, [trigger]);
-
-  useFrame(({ camera }) => {
-    camera.position.set(shake[0], shake[1], shake[2]);
-  });
-
-  return null;
-};
-
 export const Balloons = ({ freeBalloons }: { freeBalloons: boolean }) => {
   const [lightIntensity, setLightIntensity] = useState(2);
 
@@ -72,7 +41,6 @@ export const Balloons = ({ freeBalloons }: { freeBalloons: boolean }) => {
         dpr={getDevicePixelRatio()} // Limit pixel ratio for performance
         performance={{ min: 0.5 }} // Allow lower frame rates when needed
       >
-        <CameraShake trigger={freeBalloons} />
         <Environment resolution={256}>
           <Lightformer
             intensity={lightIntensity}
@@ -155,25 +123,24 @@ function InstancedSpheres() {
   const balloonColor = isDarkMode ? 0 : 1;
   const colorArray = useMemo(
     () => new Float32Array(count * 3).fill(balloonColor),
-    [count]
+    [count, balloonColor]
   );
   useLayoutEffect(() => {
     for (let i = 0; i < count; i++)
       api.at(i).scaleOverride([0.005 * count, 0.005 * count, 0.005 * count]);
-  }, []);
+  }, [api, count]);
   return (
-    <instancedMesh castShadow ref={ref} args={[, , count]} receiveShadow>
-      <sphereGeometry args={[1, 64, 64]}>
-        <instancedBufferAttribute
-          attach="attributes-color"
-          args={[colorArray, 3]}
-        />
-      </sphereGeometry>
+    <instancedMesh
+      castShadow
+      ref={ref}
+      args={[undefined, undefined, count]}
+      receiveShadow
+    >
+      <sphereGeometry args={[1, 64, 64]} />
       <meshStandardMaterial
         toneMapped={false}
         metalness={0.3}
         roughness={0.4}
-        vertexColors
       />
     </instancedMesh>
   );
@@ -209,12 +176,17 @@ function Plane({
   position = [0, 0, 0] as [number, number, number],
   rotation = [0, 0, 0] as [number, number, number],
 }) {
-  usePlane(() => ({
+  const [ref] = usePlane(() => ({
     position,
     rotation,
     type: "Static",
   }));
-  return null;
+  return (
+    <mesh ref={ref}>
+      <planeGeometry args={[1000, 1000]} />
+      <meshBasicMaterial visible={false} />
+    </mesh>
+  );
 }
 
 function Mouse() {

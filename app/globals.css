@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --background: #171717;
-  --foreground: #ffffff;
+  --background: #ffffff;
+  --foreground: #171717;
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -23,6 +23,17 @@ body {
   cursor: url("https://github.com/chenglou/react-motion/raw/master/demos/demo8-draggable-list/cursor.png")
       39 39,
     auto;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollable-content::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollable-content {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 h1 {
@@ -49,6 +60,16 @@ h3 {
 
 .image {
   fill: var(--foreground);
+}
+
+/* Cool Doggo Logo - Dark Mode Support */
+.dark .cool-doggo-logo path {
+  fill: #ffffff;
+}
+
+.cool-doggo-logo path {
+  fill: #000000;
+  transition: fill 0.3s ease;
 }
 
 .main-text {
