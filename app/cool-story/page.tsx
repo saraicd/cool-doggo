@@ -57,28 +57,39 @@ function StoriesList() {
 export default function CoolStoryPage() {
   return (
     <PageLayout>
-      <div className="p-8 sm:p-20 relative">
-        {/* Balloons are now in the root layout */}
+      <div className="relative min-h-screen">
+        {/* Video Background */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="fixed top-0 left-0 w-full h-full object-cover -z-10"
+        >
+          <source src="/videos/background-story2.mp4" type="video/mp4" />
+        </video>
 
         {/* Content */}
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-right mb-12">
-            <h1 className="text-5xl  text-purple-700 dark:text-purple-400 mb-4">
-              Cool Story
-            </h1>
-            <p className="text-md text-black dark:text-white   mb-6">
-              Join the collaborative storytelling adventure! Each person adds
-              the next part of the story.
-            </p>
-            <a
-              href="/cool-story/about"
-              className="inline-block text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 font-semibold underline"
-            >
-              How does this work? →
-            </a>
-          </div>
+        <div className="p-8 sm:p-20 relative z-10">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-right mb-12">
+              <h1 className="text-5xl  text-purple-700 dark:text-purple-400 mb-4">
+                Cool Story
+              </h1>
+              <p className="text-md text-black dark:text-white   mb-6">
+                Join the collaborative storytelling adventure! Each person adds
+                the next part of the story.
+              </p>
+              <a
+                href="/cool-story/about"
+                className="inline-block text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 font-semibold underline"
+              >
+                How does this work? →
+              </a>
+            </div>
 
-          <StoriesList />
+            <StoriesList />
+          </div>
         </div>
       </div>
     </PageLayout>

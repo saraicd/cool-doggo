@@ -30,7 +30,7 @@ export default function StoryEntries({ entries }: StoryEntriesProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="p-6 rounded-2xl bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-700"
+          className="p-6 rounded-2xl bg-purple-900/20 border border-purple-700"
         >
           {/* Previous story content */}
           <div className="space-y-3 text-gray-700 dark:text-gray-300 leading-relaxed">

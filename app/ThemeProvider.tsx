@@ -1,5 +1,5 @@
 "use client";
-import { createContext, ReactNode, useContext, useState } from 'react';
+import { createContext, ReactNode, useContext, useState, useEffect } from 'react';
 
 const ThemeContext = createContext({
   isDarkMode: false,
@@ -8,6 +8,13 @@ const ThemeContext = createContext({
 
 export const ThemeProvider = ({ children }: {children: ReactNode}) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // Ensure light mode on initial load
+  useEffect(() => {
+    document.documentElement.classList.remove('dark');
+    document.documentElement.style.setProperty('--background', '#ffffff');
+    document.documentElement.style.setProperty('--foreground', '#171717');
+  }, []);
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);

@@ -27,9 +27,9 @@ export default function Button({
     primary:
       "bg-purple-600 hover:bg-purple-700 text-white shadow-lg disabled:bg-gray-400 disabled:cursor-not-allowed",
     secondary:
-      "bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500 text-gray-800 dark:text-gray-100",
+      "bg-purple-300 dark:bg-gray-600 hover:bg-purple-400 dark:hover:bg-gray-500 text-gray-800 dark:text-gray-100",
     white:
-      "bg-white border border-purple-700 hover:bg-gray-400 hover:text-white dark:hover:bg-gray-500 text-purple-700 ",
+      "bg-white border border-purple-700 hover:bg-purple-400 hover:text-white dark:hover:bg-gray-500 text-purple-700 ",
     ghost:
       "text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 hover:bg-purple-100 dark:hover:bg-purple-900/50",
   };

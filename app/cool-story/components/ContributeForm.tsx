@@ -4,12 +4,14 @@ import { motion } from "framer-motion";
 import { submitEntryWithRetry, APIError } from "../lib/api";
 import type { SubmitEntryData } from "../lib/types";
 import Button from "../../components/Button";
+import ShareStoryButton from "./ShareStoryButton";
 
 interface ContributeFormProps {
   accessCode: string;
   previousEntryId: string | null;
   onSuccess: () => void;
   isActive: boolean;
+  storyTitle: string;
 }
 
 export default function ContributeForm({
@@ -17,6 +19,7 @@ export default function ContributeForm({
   previousEntryId,
   onSuccess,
   isActive,
+  storyTitle,
 }: ContributeFormProps) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -135,14 +138,16 @@ export default function ContributeForm({
     const remainingMinutes = Math.ceil(remainingMs / 60000);
 
     return (
-      <div className="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-2xl border border-purple-300 dark:border-purple-700">
+      <div className="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-2xl border border-purple-700">
         <p className="text-purple-700 dark:text-purple-300 text-center">
-          You can contribute again in <strong>{remainingMinutes}</strong> minute
+          ! You can contribute again in <strong>{remainingMinutes}</strong>{" "}
+          minute
           {remainingMinutes !== 1 ? "s" : ""}.
         </p>
-        <p className="text-sm text-purple-600 dark:text-purple-400 text-center mt-2">
-          Rate limit: 1 contribution per 15 minutes
-        </p>
+
+        <div className="text-right mt-4">
+          <ShareStoryButton accessCode={accessCode} storyTitle={storyTitle} />
+        </div>
       </div>
     );
   }
@@ -153,7 +158,7 @@ export default function ContributeForm({
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5, delay: 0.2 }}
       onSubmit={handleSubmit}
-      className="p-6 rounded-2xl bg-purple-50 dark:bg-purple-900/20 border border-purple-300 dark:border-purple-700 shadow-lg space-y-4"
+      className="p-6 rounded-2xl bg-purple-900/20 border border-purple-700 shadow-lg space-y-4"
     >
       <div className="flex items-center gap-2 mb-4">
         <h3 className="text-2xl font-bold text-purple-700 dark:text-purple-300">
