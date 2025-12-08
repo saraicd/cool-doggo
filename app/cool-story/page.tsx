@@ -20,7 +20,7 @@ function StoriesList() {
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {[1, 2, 3].map((i) => (
           <div
-            key={i}
+            key={`loading-${i}`}
             className="p-6 rounded-lg border-2 border-gray-200 dark:border-gray-700 animate-pulse"
           >
             <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded mb-3"></div>
@@ -66,10 +66,16 @@ export default function CoolStoryPage() {
             <h1 className="text-5xl font-bold text-purple-700 dark:text-purple-400 mb-4">
               Cool Story
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-6">
               Join the collaborative storytelling adventure! Each person adds
               the next part of the story.
             </p>
+            <a
+              href="/cool-story/about"
+              className="inline-block text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 font-semibold underline"
+            >
+              How does this work? →
+            </a>
           </div>
 
           <StoriesList />

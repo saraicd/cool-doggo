@@ -123,25 +123,24 @@ function InstancedSpheres() {
   const balloonColor = isDarkMode ? 0 : 1;
   const colorArray = useMemo(
     () => new Float32Array(count * 3).fill(balloonColor),
-    [count]
+    [count, balloonColor]
   );
   useLayoutEffect(() => {
     for (let i = 0; i < count; i++)
       api.at(i).scaleOverride([0.005 * count, 0.005 * count, 0.005 * count]);
-  }, []);
+  }, [api, count]);
   return (
-    <instancedMesh castShadow ref={ref} args={[, , count]} receiveShadow>
-      <sphereGeometry args={[1, 64, 64]}>
-        <instancedBufferAttribute
-          attach="attributes-color"
-          args={[colorArray, 3]}
-        />
-      </sphereGeometry>
+    <instancedMesh
+      castShadow
+      ref={ref}
+      args={[undefined, undefined, count]}
+      receiveShadow
+    >
+      <sphereGeometry args={[1, 64, 64]} />
       <meshStandardMaterial
         toneMapped={false}
         metalness={0.3}
         roughness={0.4}
-        vertexColors
       />
     </instancedMesh>
   );
@@ -177,12 +176,17 @@ function Plane({
   position = [0, 0, 0] as [number, number, number],
   rotation = [0, 0, 0] as [number, number, number],
 }) {
-  usePlane(() => ({
+  const [ref] = usePlane(() => ({
     position,
     rotation,
     type: "Static",
   }));
-  return null;
+  return (
+    <mesh ref={ref}>
+      <planeGeometry args={[1000, 1000]} />
+      <meshBasicMaterial visible={false} />
+    </mesh>
+  );
 }
 
 function Mouse() {

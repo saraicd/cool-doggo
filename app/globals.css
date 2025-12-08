@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --background: #171717;
-  --foreground: #ffffff;
+  --background: #ffffff;
+  --foreground: #171717;
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -32,8 +32,8 @@ body {
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .scrollable-content {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 h1 {
