@@ -26,6 +26,18 @@ export default function AboutPage() {
   return (
     <PageLayout>
       <div className="relative min-h-screen">
+        {/* Video Background */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="fixed top-0 left-0 w-full h-full object-cover -z-10"
+        >
+          <source src="/videos/background-about.mp4" type="video/mp4" />
+          <source src="/videos/background-about.webm" type="video/webm" />
+        </video>
+
         {/* Content */}
         <div className="relative z-10 p-8 sm:p-20">
           <div className="max-w-4xl mx-auto">
@@ -36,10 +48,10 @@ export default function AboutPage() {
               transition={{ duration: 0.5 }}
               className="mb-12"
             >
-              <h2 className="text-5xl mt-5 md:text-6xl font-bold text-purple-700 dark:text-purple-400 mb-4">
-                About Cool Story
+              <h2 className=" text-right mt-5 md:text-6xl text-purple-700 dark:text-purple-400 mb-4">
+                About the Project
               </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-300">
+              <p className="text-xl text-right text-gray-600 dark:text-gray-300">
                 Collaborative storytelling, one contribution at a time
               </p>
             </motion.div>
@@ -56,82 +68,57 @@ export default function AboutPage() {
                 className="bg-purple-50 dark:bg-purple-900/20 backdrop-blur-sm p-8 rounded-2xl border border-purple-300 dark:border-purple-700 shadow-lg"
               >
                 <h2 className="text-3xl font-bold text-purple-700 dark:text-purple-400 mb-4">
-                  How It Works
+                  How Cool Story Works
                 </h2>
-                <div className="space-y-6">
-                  <div className="flex gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold text-xl">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-4">
+                    <div className="flex-shrink-0 text-3xl font-bold text-purple-600 dark:text-purple-400">
                       1
                     </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
-                        Find a Story
-                      </h3>
-                      <p className="text-gray-600 dark:text-gray-300">
-                        Browse active stories on the main page. Each story has a
-                        unique theme and access code.
-                      </p>
-                    </div>
+                    <div className="flex-shrink-0 text-purple-400">→</div>
+                    <p className="text-gray-700 dark:text-gray-300">
+                      Find a story on the main page
+                    </p>
                   </div>
 
-                  <div className="flex gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold text-xl">
+                  <div className="flex items-center gap-4">
+                    <div className="flex-shrink-0 text-3xl font-bold text-purple-600 dark:text-purple-400">
                       2
                     </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
-                        Enter the Code
-                      </h3>
-                      <p className="text-gray-600 dark:text-gray-300">
-                        Get the access code from a friend or community. Click on
-                        a story and enter the code to join.
-                      </p>
-                    </div>
+                    <div className="flex-shrink-0 text-purple-400">→</div>
+                    <p className="text-gray-700 dark:text-gray-300">
+                      Enter the access code to join
+                    </p>
                   </div>
 
-                  <div className="flex gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold text-xl">
+                  <div className="flex items-center gap-4">
+                    <div className="flex-shrink-0 text-3xl font-bold text-purple-600 dark:text-purple-400">
                       3
                     </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
-                        Read the Story
-                      </h3>
-                      <p className="text-gray-600 dark:text-gray-300">
-                        Read what others have written. Only the latest entry is
-                        fully visible to keep things exciting!
-                      </p>
-                    </div>
+                    <div className="flex-shrink-0 text-purple-400">→</div>
+                    <p className="text-gray-700 dark:text-gray-300">
+                      Read what others have written
+                    </p>
                   </div>
 
-                  <div className="flex gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold text-xl">
+                  <div className="flex items-center gap-4">
+                    <div className="flex-shrink-0 text-3xl font-bold text-purple-600 dark:text-purple-400">
                       4
                     </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
-                        Add Your Part
-                      </h3>
-                      <p className="text-gray-600 dark:text-gray-300">
-                        Write 10-500 characters to continue the story. Be
-                        creative and build on what came before!
-                      </p>
-                    </div>
+                    <div className="flex-shrink-0 text-purple-400">→</div>
+                    <p className="text-gray-700 dark:text-gray-300">
+                      Add your part (10-500 characters)
+                    </p>
                   </div>
 
-                  <div className="flex gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold text-xl">
+                  <div className="flex items-center gap-4">
+                    <div className="flex-shrink-0 text-3xl font-bold text-purple-600 dark:text-purple-400">
                       5
                     </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
-                        Wait for the Next Part
-                      </h3>
-                      <p className="text-gray-600 dark:text-gray-300">
-                        After contributing, you can contribute again after 15
-                        minutes. Watch the story grow!
-                      </p>
-                    </div>
+                    <div className="flex-shrink-0 text-purple-400">→</div>
+                    <p className="text-gray-700 dark:text-gray-300">
+                      Watch the story grow!
+                    </p>
                   </div>
                 </div>
               </motion.div>

@@ -6,6 +6,18 @@ export default function StorePage() {
   return (
     <PageLayout>
       <div className="relative min-h-screen">
+        {/* Video Background */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="fixed top-0 left-0 w-full h-full object-cover -z-10"
+        >
+          <source src="/videos/background.mp4" type="video/mp4" />
+          <source src="/videos/background.webm" type="video/webm" />
+        </video>
+
         {/* Content */}
         <div className="relative z-10 p-8 sm:p-20">
           <div className="max-w-6xl mx-auto">

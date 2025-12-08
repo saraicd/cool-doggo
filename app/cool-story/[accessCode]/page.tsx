@@ -104,58 +104,61 @@ export default function StoryPage() {
 
   return (
     <PageLayout>
-      <div className="p-8 sm:p-20">
-        <div className="max-w-4xl mx-auto">
-          {/* Header */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mb-8"
-          >
-            <div className="flex justify-between items-start mb-4">
-              <h1 className="text-4xl font-bold text-purple-700 dark:text-purple-400">
-                {story.title}
-              </h1>
-              <span
-                className={`text-xs px-3 py-1 rounded-full uppercase font-semibold ${
-                  isActive
-                    ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300"
-                    : story.status === "completed"
-                    ? "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300"
-                    : "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300"
-                }`}
-              >
-                {story.status}
-              </span>
+      <div className="relative min-h-screen">
+        {/* Video Background */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="fixed top-0 left-0 w-full h-full object-cover -z-10"
+        >
+          <source src="/videos/background-story.mp4" type="video/mp4" />
+          <source src="/videos/background-story.webm" type="video/webm" />
+        </video>
+
+        <div className="relative z-10 p-8 sm:p-20">
+          <div className="max-w-4xl mx-auto">
+            {/* Header */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="mb-8"
+            >
+              <div className="flex justify-end items-start mb-4">
+                <h2 className=" md:text-5xl  text-purple-700 dark:text-purple-400">
+                  {story.title}
+                </h2>
+              </div>
+
+              {story.description && (
+                <p className="text-lg text-right text-gray-600 dark:text-gray-300">
+                  {story.description}
+                </p>
+              )}
+            </motion.div>
+
+            {/* Story Entries */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="mb-8"
+            >
+              <StoryEntries entries={entries} />
+              <div ref={bottomRef} />
+            </motion.div>
+
+            {/* Contribute Form */}
+            <div className="mt-12 mb-8">
+              <ContributeForm
+                accessCode={accessCode}
+                previousEntryId={latestEntryId}
+                onSuccess={handleSubmitSuccess}
+                isActive={isActive}
+              />
             </div>
-
-            {story.description && (
-              <p className="text-lg text-gray-600 dark:text-gray-300">
-                {story.description}
-              </p>
-            )}
-          </motion.div>
-
-          {/* Story Entries */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="mb-8"
-          >
-            <StoryEntries entries={entries} />
-            <div ref={bottomRef} />
-          </motion.div>
-
-          {/* Contribute Form */}
-          <div className="mt-12 mb-8">
-            <ContributeForm
-              accessCode={accessCode}
-              previousEntryId={latestEntryId}
-              onSuccess={handleSubmitSuccess}
-              isActive={isActive}
-            />
           </div>
         </div>
       </div>
