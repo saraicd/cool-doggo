@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import PageLayout from "../../components/PageLayout";
 import { useRouter } from "next/navigation";
 import { useTheme } from "../../ThemeProvider";
+import Button from "../../components/Button";
 
 export default function AboutPage() {
   const router = useRouter();
@@ -35,30 +36,14 @@ export default function AboutPage() {
               transition={{ duration: 0.5 }}
               className="mb-12"
             >
-              <div className="flex justify-between items-start mb-6">
-                <button
-                  onClick={() => router.push("/cool-story")}
-                  className="text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 flex items-center gap-2"
-                >
-                  ← Back to Stories
-                </button>
-
-                <button
-                  onClick={toggleTheme}
-                  className="p-3 rounded-xl bg-purple-50 dark:bg-purple-900/20 border-2 border-purple-300 dark:border-purple-700 hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-colors"
-                  aria-label="Toggle theme"
-                >
-                  {isDarkMode ? (
-                    <svg className="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                    </svg>
-                  ) : (
-                    <svg className="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                    </svg>
-                  )}
-                </button>
-              </div>
+              <Button
+                onClick={() => router.push("/cool-story")}
+                variant="ghost"
+                size="sm"
+                className="flex items-center gap-2 mb-6"
+              >
+                ← Back to Stories
+              </Button>
 
               <h1 className="text-5xl md:text-6xl font-bold text-purple-700 dark:text-purple-400 mb-4">
                 About Cool Story
@@ -238,12 +223,13 @@ export default function AboutPage() {
 
               {/* CTA */}
               <motion.div variants={fadeInUp} className="text-center pt-8">
-                <button
+                <Button
                   onClick={() => router.push("/cool-story")}
-                  className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-xl text-lg transition-colors shadow-lg"
+                  variant="primary"
+                  size="lg"
                 >
                   Start Contributing →
-                </button>
+                </Button>
               </motion.div>
             </motion.div>
           </div>

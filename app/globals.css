@@ -62,6 +62,16 @@ h3 {
   fill: var(--foreground);
 }
 
+/* Cool Doggo Logo - Dark Mode Support */
+.dark .cool-doggo-logo path {
+  fill: #ffffff;
+}
+
+.cool-doggo-logo path {
+  fill: #000000;
+  transition: fill 0.3s ease;
+}
+
 .main-text {
   color: var(--foreground);
 }

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import type { Story } from "../lib/types";
+import Button from "../../components/Button";
 
 interface StoryCardProps {
   story: Story;
@@ -135,19 +136,23 @@ export default function StoryCard({ story, index }: StoryCardProps) {
                 )}
 
                 <div className="flex gap-3">
-                  <button
+                  <Button
                     type="submit"
-                    className="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors"
+                    variant="primary"
+                    size="md"
+                    className="flex-1"
                   >
                     Submit
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     type="button"
                     onClick={handleClose}
-                    className="flex-1 bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500 text-gray-800 dark:text-gray-100 font-semibold py-3 px-6 rounded-xl transition-colors"
+                    variant="secondary"
+                    size="md"
+                    className="flex-1"
                   >
                     Cancel
-                  </button>
+                  </Button>
                 </div>
               </form>
             </motion.div>

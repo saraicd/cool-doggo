@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { submitEntryWithRetry, APIError } from "../lib/api";
 import type { SubmitEntryData } from "../lib/types";
+import Button from "../../components/Button";
 
 interface ContributeFormProps {
   accessCode: string;
@@ -152,7 +153,7 @@ export default function ContributeForm({
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5, delay: 0.2 }}
       onSubmit={handleSubmit}
-      className="p-6 rounded-2xl bg-purple-50 dark:bg-purple-900/20 border-2 border-purple-300 dark:border-purple-700 shadow-lg space-y-4"
+      className="p-6 rounded-2xl bg-purple-50 dark:bg-purple-900/20 border border-purple-300 dark:border-purple-700 shadow-lg space-y-4"
     >
       <div className="flex items-center gap-2 mb-4">
         <h3 className="text-2xl font-bold text-purple-700 dark:text-purple-300">
@@ -168,12 +169,6 @@ export default function ContributeForm({
 
       <div className="grid md:grid-cols-2 gap-4">
         <div>
-          <label
-            htmlFor="username"
-            className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1"
-          >
-            Your Name
-          </label>
           <input
             id="username"
             type="text"
@@ -185,8 +180,8 @@ export default function ContributeForm({
             required
             minLength={2}
             maxLength={50}
-            className="w-full px-4 py-2 border border-purple-300 dark:border-purple-700 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-purple-900/30 text-gray-900 dark:text-white"
-            placeholder="Enter your name"
+            className="w-full px-4 py-3 border border-purple-300 dark:border-purple-700 rounded-3xl focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-purple-900/30 text-gray-900 dark:text-white"
+            placeholder="Your name"
           />
           {fieldErrors.username && (
             <p className="text-red-600 dark:text-red-400 text-sm mt-1">
@@ -196,12 +191,6 @@ export default function ContributeForm({
         </div>
 
         <div>
-          <label
-            htmlFor="email"
-            className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1"
-          >
-            Email
-          </label>
           <input
             id="email"
             type="email"
@@ -210,42 +199,32 @@ export default function ContributeForm({
               setEmail(e.target.value);
               setFieldErrors((prev) => ({ ...prev, email: undefined }));
             }}
-            required
-            className="w-full px-4 py-2 border border-purple-300 dark:border-purple-700 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-purple-900/30 text-gray-900 dark:text-white"
-            placeholder="your@email.com"
+            className="w-full px-4 py-3 border border-purple-300 dark:border-purple-700 rounded-3xl focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-purple-900/30 text-gray-900 dark:text-white"
+            placeholder="Email (optional - to receive completed story)"
           />
           {fieldErrors.email && (
             <p className="text-red-600 dark:text-red-400 text-sm mt-1">
               {fieldErrors.email}
             </p>
           )}
-          {!fieldErrors.email && (
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-              Used to send you the completed story
-            </p>
-          )}
         </div>
       </div>
 
       <div>
-        <label
-          htmlFor="text"
-          className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1"
-        >
-          Your Story Contribution
-        </label>
         <textarea
           id="text"
           value={text}
           onChange={(e) => {
             setText(e.target.value);
             setFieldErrors((prev) => ({ ...prev, text: undefined }));
+            e.target.style.height = "auto";
+            e.target.style.height = e.target.scrollHeight + "px";
           }}
           required
           minLength={10}
           maxLength={500}
           rows={4}
-          className="w-full px-4 py-2 border border-purple-300 dark:border-purple-700 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-purple-900/30 text-gray-900 dark:text-white resize-none"
+          className="w-full px-4 py-2 border border-purple-300 dark:border-purple-700 rounded-3xl focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-purple-900/30 text-gray-900 dark:text-white resize-none overflow-hidden"
           placeholder="Continue the story..."
         />
         {fieldErrors.text && (
@@ -254,30 +233,27 @@ export default function ContributeForm({
           </p>
         )}
         <div className="flex justify-between items-center mt-1">
-          <p className="text-xs text-gray-500 dark:text-gray-400">
-            10-500 characters
-          </p>
           <p
-            className={`text-sm font-semibold ${
+            className={`text-xs ${
               isValidLength
-                ? "text-green-600 dark:text-green-400"
-                : charCount > 500
-                ? "text-red-600 dark:text-red-400"
-                : "text-gray-500 dark:text-gray-400"
+                ? "text-gray-600 dark:text-gray-400"
+                : "text-red-600 dark:text-red-400"
             }`}
           >
-            {charCount}/500
+            {charCount}/500 characters
           </p>
         </div>
       </div>
 
-      <button
+      <Button
         type="submit"
         disabled={isSubmitting || !isValidLength}
-        className="w-full bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 text-white font-bold py-3 px-6 rounded-xl transition-colors disabled:cursor-not-allowed"
+        variant="white"
+        size="md"
+        className="w-full font-bold"
       >
         {isSubmitting ? "Submitting..." : "Submit Contribution"}
-      </button>
+      </Button>
     </motion.form>
   );
 }
