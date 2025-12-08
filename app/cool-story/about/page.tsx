@@ -36,18 +36,9 @@ export default function AboutPage() {
               transition={{ duration: 0.5 }}
               className="mb-12"
             >
-              <Button
-                onClick={() => router.push("/cool-story")}
-                variant="ghost"
-                size="sm"
-                className="flex items-center gap-2 mb-6"
-              >
-                ← Back to Stories
-              </Button>
-
-              <h1 className="text-5xl md:text-6xl font-bold text-purple-700 dark:text-purple-400 mb-4">
+              <h2 className="text-5xl mt-5 md:text-6xl font-bold text-purple-700 dark:text-purple-400 mb-4">
                 About Cool Story
-              </h1>
+              </h2>
               <p className="text-xl text-gray-600 dark:text-gray-300">
                 Collaborative storytelling, one contribution at a time
               </p>
@@ -62,7 +53,7 @@ export default function AboutPage() {
             >
               <motion.div
                 variants={fadeInUp}
-                className="bg-purple-50 dark:bg-purple-900/20 backdrop-blur-sm p-8 rounded-2xl border-2 border-purple-300 dark:border-purple-700 shadow-lg"
+                className="bg-purple-50 dark:bg-purple-900/20 backdrop-blur-sm p-8 rounded-2xl border border-purple-300 dark:border-purple-700 shadow-lg"
               >
                 <h2 className="text-3xl font-bold text-purple-700 dark:text-purple-400 mb-4">
                   How It Works
@@ -148,7 +139,7 @@ export default function AboutPage() {
               {/* Rules Section */}
               <motion.div
                 variants={fadeInUp}
-                className="bg-purple-50 dark:bg-purple-900/20 backdrop-blur-sm p-8 rounded-2xl border-2 border-purple-300 dark:border-purple-700 shadow-lg"
+                className="bg-purple-50 dark:bg-purple-900/20 backdrop-blur-sm p-8 rounded-2xl border border-purple-300 dark:border-purple-700 shadow-lg"
               >
                 <h2 className="text-3xl font-bold text-purple-700 dark:text-purple-400 mb-4">
                   The Rules
@@ -203,7 +194,7 @@ export default function AboutPage() {
               {/* Why Section */}
               <motion.div
                 variants={fadeInUp}
-                className="bg-purple-50 dark:bg-purple-900/20 backdrop-blur-sm p-8 rounded-2xl border-2 border-purple-300 dark:border-purple-700 shadow-lg"
+                className="bg-purple-50 dark:bg-purple-900/20 backdrop-blur-sm p-8 rounded-2xl border border-purple-300 dark:border-purple-700 shadow-lg"
               >
                 <h2 className="text-3xl font-bold text-purple-700 dark:text-purple-400 mb-4">
                   Why Cool Story?

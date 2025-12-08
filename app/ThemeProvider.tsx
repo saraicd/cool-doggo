@@ -12,9 +12,11 @@ export const ThemeProvider = ({ children }: {children: ReactNode}) => {
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
     if (isDarkMode) {
+      document.documentElement.classList.remove('dark');
       document.documentElement.style.setProperty('--background', '#ffffff');
       document.documentElement.style.setProperty('--foreground', '#171717');
     } else {
+      document.documentElement.classList.add('dark');
       document.documentElement.style.setProperty('--background', '#0a0a0a');
       document.documentElement.style.setProperty('--foreground', '#ededed');
     }

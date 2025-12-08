@@ -12,7 +12,7 @@ export default function LatestEntry({ entry }: LatestEntryProps) {
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5, delay: 0.2 }}
-      className="p-6 rounded-2xl bg-purple-50 dark:bg-purple-900/20 border-2 border-purple-300 dark:border-purple-700 shadow-lg"
+      className="p-6 rounded-2xl bg-purple-50 dark:bg-purple-900/20 border border-purple-300 dark:border-purple-700 shadow-lg"
     >
       <div className="flex justify-between items-start mb-3">
         <div className="flex items-center gap-2">

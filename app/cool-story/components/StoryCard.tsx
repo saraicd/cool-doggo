@@ -49,44 +49,34 @@ export default function StoryCard({ story, index }: StoryCardProps) {
         whileHover={{ scale: isActive ? 1.02 : 1 }}
       >
         <div
-          className={`block p-6 rounded-2xl border-2 transition-all ${
+          className={`p-6 rounded-2xl border transition-all h-64 flex flex-col ${
             isActive
-              ? "border-purple-500 hover:border-purple-600 hover:shadow-lg cursor-pointer bg-purple-50 dark:bg-purple-900/20"
-              : "border-gray-300 dark:border-gray-600 opacity-60 cursor-not-allowed bg-gray-50 dark:bg-gray-900"
+              ? "border-purple-500 hover:border-purple-600 hover:shadow-lg cursor-pointer backdrop-blur-md bg-purple-50/50 dark:bg-purple-900/20"
+              : "border-purple-500 dark:border-gray-600 opacity-60 cursor-not-allowed backdrop-blur-md bg-purple-50/50 dark:bg-gray-900"
           }`}
           onClick={handleCardClick}
         >
-          <div className="flex justify-between items-start mb-3">
+          <div className="flex items-start mb-3">
             <h3 className="text-2xl font-bold text-purple-700 dark:text-purple-400">
               {story.title}
             </h3>
-            <span
-              className={`text-xs px-3 py-1 rounded-full uppercase font-semibold ${
-                isActive
-                  ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300"
-                  : story.status === "completed"
-                  ? "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300"
-                  : "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300"
-              }`}
-            >
-              {story.status}
-            </span>
           </div>
 
-          <p className="text-gray-600 dark:text-gray-300 mb-4">
-            {story.description}
-          </p>
+          <p className="text-gray-500 text-md mb-4">{story.description}</p>
 
           <div className="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400">
-            <span>Access code required</span>
-            {story.maxEntries && (
-              <span>Max: {story.maxEntries} entries</span>
-            )}
+            {story.maxEntries && <span>Max: {story.maxEntries} entries</span>}
           </div>
 
           {isActive && (
-            <div className="mt-4 text-purple-600 dark:text-purple-400 font-semibold text-sm">
-              Click to contribute →
+            <div className="mt-auto">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="w-full pointer-events-none"
+              >
+                Click to contribute →
+              </Button>
             </div>
           )}
         </div>
@@ -125,7 +115,7 @@ export default function StoryCard({ story, index }: StoryCardProps) {
                     setError("");
                   }}
                   placeholder="Enter access code"
-                  className="w-full px-4 py-3 rounded-xl border-2 border-purple-300 dark:border-purple-700 bg-white dark:bg-purple-900/30 text-gray-900 dark:text-gray-100 focus:border-purple-500 focus:outline-none mb-4"
+                  className="w-full px-4 py-3 rounded-xl border border-purple-300 dark:border-purple-700 bg-white dark:bg-purple-900/30 text-gray-900 dark:text-gray-100 focus:border-purple-500 focus:outline-none mb-4"
                   autoFocus
                 />
 

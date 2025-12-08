@@ -31,7 +31,7 @@ export default function ContributeForm({
   const [rateLimitedUntil, setRateLimitedUntil] = useState<number | null>(null);
 
   // Check for rate limit in localStorage
-  /* useEffect(() => {
+  useEffect(() => {
     const storedLimit = localStorage.getItem("coolStoryRateLimit");
     if (storedLimit) {
       const limitTime = parseInt(storedLimit);
@@ -41,7 +41,7 @@ export default function ContributeForm({
         localStorage.removeItem("coolStoryRateLimit");
       }
     }
-  }, []); */
+  }, []);
 
   // Countdown timer for rate limit
   useEffect(() => {
@@ -135,7 +135,7 @@ export default function ContributeForm({
     const remainingMinutes = Math.ceil(remainingMs / 60000);
 
     return (
-      <div className="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-2xl border-2 border-purple-300 dark:border-purple-700">
+      <div className="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-2xl border border-purple-300 dark:border-purple-700">
         <p className="text-purple-700 dark:text-purple-300 text-center">
           You can contribute again in <strong>{remainingMinutes}</strong> minute
           {remainingMinutes !== 1 ? "s" : ""}.

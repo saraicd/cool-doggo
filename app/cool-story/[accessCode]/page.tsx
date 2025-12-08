@@ -98,7 +98,8 @@ export default function StoryPage() {
   }
 
   const { story, entries } = storyData;
-  const latestEntryId = entries.length > 0 ? entries[entries.length - 1]._id : null;
+  const latestEntryId =
+    entries.length > 0 ? entries[entries.length - 1]._id : null;
   const isActive = story.status === "active";
 
   return (
@@ -112,13 +113,6 @@ export default function StoryPage() {
             transition={{ duration: 0.5 }}
             className="mb-8"
           >
-            <button
-              onClick={() => router.push("/cool-story")}
-              className="text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 mb-4 flex items-center gap-2"
-            >
-              ← Back to Stories
-            </button>
-
             <div className="flex justify-between items-start mb-4">
               <h1 className="text-4xl font-bold text-purple-700 dark:text-purple-400">
                 {story.title}
@@ -141,12 +135,6 @@ export default function StoryPage() {
                 {story.description}
               </p>
             )}
-
-            <div className="mt-4 flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
-              <span>Access Code: <strong>{accessCode}</strong></span>
-              <span>•</span>
-              <span>{entries.length} contribution{entries.length !== 1 ? 's' : ''}</span>
-            </div>
           </motion.div>
 
           {/* Story Entries */}
@@ -156,9 +144,6 @@ export default function StoryPage() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="mb-8"
           >
-            <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">
-              The Story So Far...
-            </h2>
             <StoryEntries entries={entries} />
             <div ref={bottomRef} />
           </motion.div>

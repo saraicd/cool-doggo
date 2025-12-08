@@ -62,11 +62,11 @@ export default function CoolStoryPage() {
 
         {/* Content */}
         <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold text-purple-700 dark:text-purple-400 mb-4">
+          <div className="text-right mb-12">
+            <h1 className="text-5xl  text-purple-700 dark:text-purple-400 mb-4">
               Cool Story
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-6">
+            <p className="text-md text-black dark:white   mb-6">
               Join the collaborative storytelling adventure! Each person adds
               the next part of the story.
             </p>
