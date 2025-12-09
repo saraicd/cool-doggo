@@ -32,7 +32,7 @@ export default function StorePage() {
                 Store
               </h2>
               <p className="text-xl text-right text-gray-600 dark:text-gray-300">
-                Cool Doggo merchandise coming soon
+                Merchandise coming soon
               </p>
             </motion.div>
 
