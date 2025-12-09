@@ -41,7 +41,7 @@ export default function StorePage() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="bg-purple-50 dark:bg-purple-900/20 backdrop-blur-sm p-8 rounded-2xl border border-purple-300 dark:border-purple-700 shadow-lg"
+              className="bg-purple-900/20 backdrop-blur-sm p-8 rounded-2xl border border-purple-700 shadow-lg"
             >
               <div className="space-y-6">
                 <h2 className="text-3xl font-bold text-purple-700 dark:text-purple-400">
