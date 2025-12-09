@@ -1,4 +1,4 @@
-export type StoryStatus = 'active' | 'completed' | 'archived';
+export type StoryStatus = "active" | "completed" | "archived";
 
 export interface Story {
   _id: string;

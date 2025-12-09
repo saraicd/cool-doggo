@@ -113,8 +113,8 @@ export default function StoryPage() {
           playsInline
           className="fixed top-0 left-0 w-full h-full object-cover -z-10"
         >
-          <source src="/videos/background-story.mp4" type="video/mp4" />
-          <source src="/videos/background-story.webm" type="video/webm" />
+          <source src="/videos/background-home.mp4" type="video/mp4" />
+          <source src="/videos/background-home.webm" type="video/webm" />
         </video>
 
         <div className="relative z-10 p-8 sm:p-20">
@@ -151,12 +151,13 @@ export default function StoryPage() {
             </motion.div>
 
             {/* Contribute Form */}
-            <div className="mt-12 mb-8">
+            <div className="mt-4 mb-8">
               <ContributeForm
                 accessCode={accessCode}
                 previousEntryId={latestEntryId}
                 onSuccess={handleSubmitSuccess}
                 isActive={isActive}
+                storyTitle={story.title}
               />
             </div>
           </div>

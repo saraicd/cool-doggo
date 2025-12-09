@@ -65,7 +65,7 @@ export default function AboutPage() {
             >
               <motion.div
                 variants={fadeInUp}
-                className="bg-purple-50 dark:bg-purple-900/20 backdrop-blur-sm p-8 rounded-2xl border border-purple-300 dark:border-purple-700 shadow-lg"
+                className="bg-purple-900/20 backdrop-blur-sm p-8 rounded-2xl border border-purple-700 shadow-lg"
               >
                 <h2 className="text-3xl font-bold text-purple-700 dark:text-purple-400 mb-4">
                   How Cool Story Works
@@ -126,7 +126,7 @@ export default function AboutPage() {
               {/* Rules Section */}
               <motion.div
                 variants={fadeInUp}
-                className="bg-purple-50 dark:bg-purple-900/20 backdrop-blur-sm p-8 rounded-2xl border border-purple-300 dark:border-purple-700 shadow-lg"
+                className="bg-purple-50 dark:bg-purple-900/20 backdrop-blur-sm p-8 rounded-2xl border border-purple-700 shadow-lg"
               >
                 <h2 className="text-3xl font-bold text-purple-700 dark:text-purple-400 mb-4">
                   The Rules
@@ -181,7 +181,7 @@ export default function AboutPage() {
               {/* Why Section */}
               <motion.div
                 variants={fadeInUp}
-                className="bg-purple-50 dark:bg-purple-900/20 backdrop-blur-sm p-8 rounded-2xl border border-purple-300 dark:border-purple-700 shadow-lg"
+                className="bg-purple-900/20 backdrop-blur-sm p-8 rounded-2xl border border-purple-700 shadow-lg"
               >
                 <h2 className="text-3xl font-bold text-purple-700 dark:text-purple-400 mb-4">
                   Why Cool Story?
@@ -204,7 +204,7 @@ export default function AboutPage() {
                 <Button
                   onClick={() => router.push("/cool-story")}
                   variant="primary"
-                  size="lg"
+                  size="md"
                 >
                   Start Contributing →
                 </Button>
