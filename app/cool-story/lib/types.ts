@@ -56,3 +56,15 @@ export interface SubmitEntryResponse {
   };
   latestId?: string; // For race condition (409)
 }
+
+export interface EditStoryData {
+  title?: string;
+  description?: string;
+  status?: StoryStatus;
+  maxEntries?: number | null;
+}
+
+export interface EditStoryResponse {
+  message: string;
+  story: Story;
+}

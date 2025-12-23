@@ -4,6 +4,8 @@ import type {
   LatestEntryResponse,
   SubmitEntryData,
   SubmitEntryResponse,
+  EditStoryData,
+  EditStoryResponse,
 } from './types';
 
 const API_BASE = 'https://cool-story-api-production.up.railway.app';
@@ -125,4 +127,20 @@ export async function submitEntryWithRetry(
   }
 
   throw new APIError('Max retries exceeded', 500);
+}
+
+export async function editStory(
+  accessCode: string,
+  data: EditStoryData,
+  adminKey: string
+): Promise<EditStoryResponse> {
+  const response = await fetch(`${API_BASE}/story/${accessCode}/edit`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Admin-Key': adminKey,
+    },
+    body: JSON.stringify(data),
+  });
+  return handleResponse<EditStoryResponse>(response);
 }
