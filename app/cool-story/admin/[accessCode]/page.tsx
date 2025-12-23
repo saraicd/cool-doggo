@@ -34,7 +34,7 @@ export default function AdminStoryPage() {
         createdAt: data.story.createdAt || new Date().toISOString(),
         completedAt: data.story.completedAt || null,
         maxEntries: data.story.maxEntries || null,
-      } as Story);
+      });
     } catch (err) {
       if (err instanceof APIError) {
         setError(err.message);

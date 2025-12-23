@@ -22,9 +22,13 @@ export interface StoryEntry {
 
 export interface StoryWithEntries {
   story: {
+    _id?: string;
     title: string;
     description: string;
     status: StoryStatus;
+    createdAt?: string;
+    completedAt?: string | null;
+    maxEntries?: number | null;
   };
   entries: StoryEntry[];
 }
