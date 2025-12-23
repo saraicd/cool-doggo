@@ -68,3 +68,8 @@ export interface EditStoryResponse {
   message: string;
   story: Story;
 }
+
+export interface EditLimitedData {
+  description?: string;
+  status?: StoryStatus;
+}

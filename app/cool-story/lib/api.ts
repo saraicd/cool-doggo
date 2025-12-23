@@ -6,6 +6,7 @@ import type {
   SubmitEntryResponse,
   EditStoryData,
   EditStoryResponse,
+  EditLimitedData,
 } from './types';
 
 const API_BASE = 'https://cool-story-api-production.up.railway.app';
@@ -139,6 +140,22 @@ export async function editStory(
     headers: {
       'Content-Type': 'application/json',
       'X-Admin-Key': adminKey,
+    },
+    body: JSON.stringify(data),
+  });
+  return handleResponse<EditStoryResponse>(response);
+}
+
+export async function editStoryWithEditCode(
+  accessCode: string,
+  data: EditLimitedData,
+  editCode: string
+): Promise<EditStoryResponse> {
+  const response = await fetch(`${API_BASE}/story/${accessCode}/edit-limited`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Edit-Code': editCode,
     },
     body: JSON.stringify(data),
   });

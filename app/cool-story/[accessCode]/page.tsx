@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import PageLayout from "../../components/PageLayout";
 import StoryEntries from "../components/StoryEntries";
 import ContributeForm from "../components/ContributeForm";
+import EditStoryModal from "../components/EditStoryModal";
+import Button from "../../components/Button";
 import { getStory, APIError } from "../lib/api";
 import type { StoryWithEntries } from "../lib/types";
 
@@ -16,6 +18,7 @@ export default function StoryPage() {
   const [storyData, setStoryData] = useState<StoryWithEntries | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showEditModal, setShowEditModal] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
 
   const loadStory = async () => {
@@ -133,9 +136,20 @@ export default function StoryPage() {
               </div>
 
               {story.description && (
-                <p className="text-lg text-right text-gray-600 dark:text-gray-300">
-                  {story.description}
-                </p>
+                <>
+                  <p className="text-lg text-right text-gray-600 dark:text-gray-300">
+                    {story.description}
+                  </p>
+                  <div className="flex justify-end mt-2">
+                    <Button
+                      onClick={() => setShowEditModal(true)}
+                      variant="ghost"
+                      size="sm"
+                    >
+                      Edit Story
+                    </Button>
+                  </div>
+                </>
               )}
             </motion.div>
 
@@ -162,6 +176,19 @@ export default function StoryPage() {
             </div>
           </div>
         </div>
+
+        {/* Edit Story Modal */}
+        <EditStoryModal
+          isOpen={showEditModal}
+          onClose={() => setShowEditModal(false)}
+          accessCode={accessCode}
+          currentDescription={story.description}
+          currentStatus={story.status}
+          onSuccess={() => {
+            setShowEditModal(false);
+            loadStory();
+          }}
+        />
       </div>
     </PageLayout>
   );
