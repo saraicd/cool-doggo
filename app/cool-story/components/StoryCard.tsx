@@ -1,0 +1,154 @@
+"use client";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
+import type { Story } from "../lib/types";
+import Button from "../../components/Button";
+
+interface StoryCardProps {
+  story: Story;
+  index: number;
+}
+
+export default function StoryCard({ story, index }: StoryCardProps) {
+  const router = useRouter();
+  const isActive = story.status === "active";
+  const [showCodeInput, setShowCodeInput] = useState(false);
+  const [inputCode, setInputCode] = useState("");
+  const [error, setError] = useState("");
+
+  const handleCardClick = () => {
+    if (!isActive) return;
+    setShowCodeInput(true);
+    setError("");
+    setInputCode("");
+  };
+
+  const handleSubmitCode = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (inputCode.trim().toLowerCase() === story.accessCode.toLowerCase()) {
+      router.push(`/cool-story/${story.accessCode}`);
+    } else {
+      setError("Incorrect access code. Please try again.");
+      setInputCode("");
+    }
+  };
+
+  const handleClose = () => {
+    setShowCodeInput(false);
+    setError("");
+    setInputCode("");
+  };
+
+  return (
+    <>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: index * 0.1 }}
+        whileHover={{ scale: isActive ? 1.02 : 1 }}
+      >
+        <div
+          className={`p-6 rounded-2xl border transition-all h-64 flex flex-col ${
+            isActive
+              ? "border-purple-500 hover:border-purple-600 hover:shadow-lg cursor-pointer backdrop-blur-md bg-purple-900/20 dark:bg-purple-900/20"
+              : "border-purple-500 dark:border-gray-600 opacity-60 cursor-not-allowed backdrop-blur-md bg-purple-50/50 dark:bg-gray-900"
+          }`}
+          onClick={handleCardClick}
+        >
+          <div className="flex items-start mb-3">
+            <h3 className="text-2xl font-bold text-purple-700 dark:text-purple-400">
+              {story.title}
+            </h3>
+          </div>
+
+          <p className="text-gray-500 text-md mb-4">{story.description}</p>
+
+          <div className="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400">
+            {story.maxEntries && <span>Max: {story.maxEntries} entries</span>}
+          </div>
+
+          {isActive && (
+            <div className="mt-auto">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="w-full pointer-events-none"
+              >
+                Click to contribute →
+              </Button>
+            </div>
+          )}
+        </div>
+      </motion.div>
+
+      {/* Code Input Modal */}
+      <AnimatePresence>
+        {showCodeInput && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 flex items-center justify-center z-[100] p-4"
+            onClick={handleClose}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-purple-50 dark:bg-purple-900/20 rounded-2xl p-6 max-w-md w-full shadow-xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <h2 className="text-2xl font-bold text-purple-700 dark:text-purple-400 mb-2">
+                {story.title}
+              </h2>
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                Enter the access code to contribute to this story
+              </p>
+
+              <form onSubmit={handleSubmitCode}>
+                <input
+                  type="text"
+                  value={inputCode}
+                  onChange={(e) => {
+                    setInputCode(e.target.value);
+                    setError("");
+                  }}
+                  placeholder="Enter access code"
+                  className="w-full px-4 py-3 rounded-xl border border-purple-300 dark:border-purple-700 bg-white dark:bg-purple-900/30 text-gray-900 dark:text-gray-100 focus:border-purple-500 focus:outline-none mb-4"
+                  autoFocus
+                />
+
+                {error && (
+                  <p className="text-red-600 dark:text-red-400 text-sm mb-4">
+                    {error}
+                  </p>
+                )}
+
+                <div className="flex gap-3">
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    size="md"
+                    className="flex-1"
+                  >
+                    Submit
+                  </Button>
+                  <Button
+                    type="button"
+                    onClick={handleClose}
+                    variant="secondary"
+                    size="md"
+                    className="flex-1"
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </form>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
