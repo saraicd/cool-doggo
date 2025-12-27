@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import type { Story } from "../lib/types";
@@ -19,14 +19,29 @@ export default function StoryCard({ story, index }: StoryCardProps) {
 
   const handleCardClick = () => {
     if (!isActive) return;
-    setShowCodeInput(true);
-    setError("");
-    setInputCode("");
+
+    // Check if access code is already stored in localStorage
+    const storageKey = `accessCode_${story.accessCode}`;
+    const storedCode = localStorage.getItem(storageKey);
+
+    if (storedCode && storedCode.toLowerCase() === story.accessCode.toLowerCase()) {
+      // Auto-navigate if code is already stored
+      router.push(`/cool-story/${story.accessCode}`);
+    } else {
+      // Show modal to enter code
+      setShowCodeInput(true);
+      setError("");
+      // Load stored code if available to pre-fill
+      setInputCode(storedCode || "");
+    }
   };
 
   const handleSubmitCode = (e: React.FormEvent) => {
     e.preventDefault();
     if (inputCode.trim().toLowerCase() === story.accessCode.toLowerCase()) {
+      // Save to localStorage for future access
+      const storageKey = `accessCode_${story.accessCode}`;
+      localStorage.setItem(storageKey, inputCode.trim());
       router.push(`/cool-story/${story.accessCode}`);
     } else {
       setError("Incorrect access code. Please try again.");

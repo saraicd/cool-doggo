@@ -48,7 +48,7 @@ function StoriesList() {
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {stories.map((story, index) => (
-        <StoryCard key={story._id} story={story} index={index} />
+        <StoryCard key={story._id || story.accessCode || index} story={story} index={index} />
       ))}
     </div>
   );
