@@ -1,8 +1,14 @@
 "use client";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import PageLayout from "../components/PageLayout";
+import { useLanguage } from "../lib/LanguageContext";
+import { t } from "../lib/i18n";
 
 export default function StorePage() {
+  const { language } = useLanguage();
+  const [videoLoaded, setVideoLoaded] = useState(false);
+
   return (
     <PageLayout>
       <div className="relative min-h-screen">
@@ -12,7 +18,10 @@ export default function StorePage() {
           loop
           muted
           playsInline
-          className="fixed top-0 left-0 w-full h-full object-cover -z-10"
+          onLoadedData={() => setVideoLoaded(true)}
+          className={`fixed top-0 left-0 w-full h-full object-cover -z-10 transition-opacity duration-1000 ${
+            videoLoaded ? "opacity-100" : "opacity-0"
+          }`}
         >
           <source src="/videos/background.mp4" type="video/mp4" />
           <source src="/videos/background.webm" type="video/webm" />
@@ -29,10 +38,10 @@ export default function StorePage() {
               className="mb-12"
             >
               <h2 className=" text-right md:text-6xl  text-purple-700 dark:text-purple-400 mb-4">
-                Store
+                {t("storeTitle", language)}
               </h2>
               <p className="text-xl text-right text-gray-600 dark:text-gray-300">
-                Merchandise coming soon
+                {t("merchandiseComingSoon", language)}
               </p>
             </motion.div>
 
@@ -45,15 +54,13 @@ export default function StorePage() {
             >
               <div className="space-y-6">
                 <h2 className="text-3xl font-bold text-purple-700 dark:text-purple-400">
-                  Store Not Available Yet
+                  {t("storeNotAvailableYet", language)}
                 </h2>
                 <p className="text-gray-700 dark:text-gray-300 text-lg">
-                  We're working hard to bring you awesome Cool Doggo
-                  merchandise! Check back soon for updates.
+                  {t("workingOnMerchandise", language)}
                 </p>
                 <p className="text-gray-600 dark:text-gray-400">
-                  Stay tuned for exclusive items, limited editions, and more
-                  surprises.
+                  {t("stayTuned", language)}
                 </p>
               </div>
             </motion.div>

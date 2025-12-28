@@ -2,12 +2,15 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Button from '../../../components/Button';
+import { useLanguage } from '../../../lib/LanguageContext';
+import { t } from '../../../lib/i18n';
 
 interface AdminLoginProps {
   onLogin: (key: string) => void;
 }
 
 export default function AdminLogin({ onLogin }: AdminLoginProps) {
+  const { language } = useLanguage();
   const [inputKey, setInputKey] = useState('');
   const [error, setError] = useState('');
 
@@ -18,7 +21,7 @@ export default function AdminLogin({ onLogin }: AdminLoginProps) {
     if (inputKey.trim() === envKey) {
       onLogin(inputKey.trim());
     } else {
-      setError('Invalid admin key. Please try again.');
+      setError(t('invalidAdminKey', language));
       setInputKey('');
     }
   };
@@ -31,10 +34,10 @@ export default function AdminLogin({ onLogin }: AdminLoginProps) {
       className="max-w-md mx-auto p-6 rounded-2xl bg-purple-900/20 border border-purple-700 shadow-lg"
     >
       <h2 className="text-2xl font-bold text-purple-700 dark:text-purple-300 mb-4">
-        Admin Authentication
+        {t('adminAuthentication', language)}
       </h2>
       <p className="text-gray-600 dark:text-gray-400 mb-6">
-        Enter the admin key to access story editor
+        {t('adminKeyPrompt', language)}
       </p>
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -45,7 +48,7 @@ export default function AdminLogin({ onLogin }: AdminLoginProps) {
             setInputKey(e.target.value);
             setError('');
           }}
-          placeholder="Admin key"
+          placeholder={t('adminKeyPlaceholder', language)}
           className="w-full px-4 py-3 border border-purple-300 dark:border-purple-700 rounded-3xl focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-purple-900/30 text-gray-900 dark:text-white"
           autoFocus
         />
@@ -62,7 +65,7 @@ export default function AdminLogin({ onLogin }: AdminLoginProps) {
           size="md"
           className="w-full font-bold"
         >
-          Login
+          {t('login', language)}
         </Button>
       </form>
     </motion.div>

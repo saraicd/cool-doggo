@@ -1,13 +1,18 @@
 "use client";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import PageLayout from "../../components/PageLayout";
 import { useRouter } from "next/navigation";
 import { useTheme } from "../../ThemeProvider";
 import Button from "../../components/Button";
+import { useLanguage } from "../../lib/LanguageContext";
+import { t } from "../../lib/i18n";
 
 export default function AboutPage() {
   const router = useRouter();
   const { isDarkMode, toggleTheme } = useTheme();
+  const { language } = useLanguage();
+  const [videoLoaded, setVideoLoaded] = useState(false);
 
   const fadeInUp = {
     initial: { opacity: 0, y: 20 },
@@ -32,7 +37,10 @@ export default function AboutPage() {
           loop
           muted
           playsInline
-          className="fixed top-0 left-0 w-full h-full object-cover -z-10"
+          onLoadedData={() => setVideoLoaded(true)}
+          className={`fixed top-0 left-0 w-full h-full object-cover -z-10 transition-opacity duration-1000 ${
+            videoLoaded ? "opacity-100" : "opacity-0"
+          }`}
         >
           <source src="/videos/background-about.mp4" type="video/mp4" />
           <source src="/videos/background-about.webm" type="video/webm" />
@@ -49,10 +57,10 @@ export default function AboutPage() {
               className="mb-12"
             >
               <h2 className=" text-right mt-5 md:text-6xl text-purple-700 dark:text-purple-400 mb-4">
-                About the Project
+                {t("aboutPageTitle", language)}
               </h2>
               <p className="text-xl text-right text-gray-600 dark:text-gray-300">
-                Collaborative storytelling, one contribution at a time
+                {t("aboutPageSubtitle", language)}
               </p>
             </motion.div>
 
@@ -68,7 +76,7 @@ export default function AboutPage() {
                 className="bg-purple-900/20 backdrop-blur-sm p-8 rounded-2xl border border-purple-700 shadow-lg"
               >
                 <h2 className="text-3xl font-bold text-purple-700 dark:text-purple-400 mb-4">
-                  How Cool Story Works
+                  {t("howCoolStoryWorks", language)}
                 </h2>
                 <div className="space-y-4">
                   <div className="flex items-center gap-4">
@@ -77,7 +85,7 @@ export default function AboutPage() {
                     </div>
                     <div className="flex-shrink-0 text-purple-400">→</div>
                     <p className="text-gray-700 dark:text-gray-300">
-                      Find a story on the main page
+                      {t("step1", language)}
                     </p>
                   </div>
 
@@ -87,7 +95,7 @@ export default function AboutPage() {
                     </div>
                     <div className="flex-shrink-0 text-purple-400">→</div>
                     <p className="text-gray-700 dark:text-gray-300">
-                      Enter the access code to join
+                      {t("step2", language)}
                     </p>
                   </div>
 
@@ -97,7 +105,7 @@ export default function AboutPage() {
                     </div>
                     <div className="flex-shrink-0 text-purple-400">→</div>
                     <p className="text-gray-700 dark:text-gray-300">
-                      Read what others have written
+                      {t("step3", language)}
                     </p>
                   </div>
 
@@ -107,7 +115,7 @@ export default function AboutPage() {
                     </div>
                     <div className="flex-shrink-0 text-purple-400">→</div>
                     <p className="text-gray-700 dark:text-gray-300">
-                      Add your part (10-500 characters)
+                      {t("step4", language)}
                     </p>
                   </div>
 
@@ -117,7 +125,17 @@ export default function AboutPage() {
                     </div>
                     <div className="flex-shrink-0 text-purple-400">→</div>
                     <p className="text-gray-700 dark:text-gray-300">
-                      Watch the story grow!
+                      {t("step5", language)}
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-4">
+                    <div className="flex-shrink-0 text-3xl font-bold text-purple-600 dark:text-purple-400">
+                      6
+                    </div>
+                    <div className="flex-shrink-0 text-purple-400">→</div>
+                    <p className="text-gray-700 dark:text-gray-300">
+                      {t("step6", language)}
                     </p>
                   </div>
                 </div>
@@ -129,7 +147,7 @@ export default function AboutPage() {
                 className="bg-purple-50 dark:bg-purple-900/20 backdrop-blur-sm p-8 rounded-2xl border border-purple-700 shadow-lg"
               >
                 <h2 className="text-3xl font-bold text-purple-700 dark:text-purple-400 mb-4">
-                  The Rules
+                  {t("theRules", language)}
                 </h2>
                 <ul className="space-y-3 text-gray-600 dark:text-gray-300">
                   <li className="flex items-start gap-3">
@@ -137,7 +155,7 @@ export default function AboutPage() {
                       ✓
                     </span>
                     <span>
-                      Each contribution must be between 10-500 characters
+                      {t("rule1", language)}
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
@@ -145,8 +163,7 @@ export default function AboutPage() {
                       ✓
                     </span>
                     <span>
-                      You can contribute once every 15 minutes to give others a
-                      chance
+                      {t("rule2", language)}
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
@@ -154,8 +171,7 @@ export default function AboutPage() {
                       ✓
                     </span>
                     <span>
-                      Previous entries are blurred to keep the story fresh and
-                      exciting
+                      {t("rule3", language)}
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
@@ -163,7 +179,7 @@ export default function AboutPage() {
                       ✓
                     </span>
                     <span>
-                      Stories have a maximum number of entries before completion
+                      {t("rule4", language)}
                     </span>
                   </li>
                   <li className="flex items-start gap-3">
@@ -171,8 +187,15 @@ export default function AboutPage() {
                       ✓
                     </span>
                     <span>
-                      Be creative, respectful, and build on others'
-                      contributions
+                      {t("rule5", language)}
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-purple-600 dark:text-purple-400 text-xl">
+                      ✓
+                    </span>
+                    <span>
+                      {t("rule6", language)}
                     </span>
                   </li>
                 </ul>
@@ -184,18 +207,13 @@ export default function AboutPage() {
                 className="bg-purple-900/20 backdrop-blur-sm p-8 rounded-2xl border border-purple-700 shadow-lg"
               >
                 <h2 className="text-3xl font-bold text-purple-700 dark:text-purple-400 mb-4">
-                  Why Cool Story?
+                  {t("whyCoolStory", language)}
                 </h2>
                 <p className="text-gray-700 dark:text-gray-300 mb-4">
-                  Cool Story is all about collective creativity. By limiting
-                  what you can see and when you can contribute, we create an
-                  environment where every voice matters and stories can take
-                  unexpected, delightful turns.
+                  {t("whyCoolStoryText1", language)}
                 </p>
                 <p className="text-gray-700 dark:text-gray-300">
-                  You'll receive the completed story via email once it reaches
-                  its maximum entries. It's like a creative time capsule that
-                  you helped build!
+                  {t("whyCoolStoryText2", language)}
                 </p>
               </motion.div>
 
@@ -206,7 +224,7 @@ export default function AboutPage() {
                   variant="primary"
                   size="md"
                 >
-                  Start Contributing →
+                  {t("startContributing", language)}
                 </Button>
               </motion.div>
             </motion.div>

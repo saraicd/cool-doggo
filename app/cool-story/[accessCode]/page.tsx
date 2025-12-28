@@ -9,10 +9,13 @@ import EditStoryModal from "../components/EditStoryModal";
 import Button from "../../components/Button";
 import { getStory, APIError } from "../lib/api";
 import type { StoryWithEntries } from "../lib/types";
+import { useLanguage } from "../../lib/LanguageContext";
+import { t } from "../../lib/i18n";
 
 export default function StoryPage() {
   const params = useParams();
   const router = useRouter();
+  const { language } = useLanguage();
   const accessCode = params.accessCode as string;
 
   const [storyData, setStoryData] = useState<StoryWithEntries | null>(null);
@@ -146,7 +149,7 @@ export default function StoryPage() {
                       variant="ghost"
                       size="sm"
                     >
-                      Edit Story
+                      {t('editStory', language)}
                     </Button>
                   </div>
                 </>
@@ -160,7 +163,7 @@ export default function StoryPage() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="mb-8"
             >
-              <StoryEntries entries={entries} />
+              <StoryEntries entries={entries} status={story.status} />
               <div ref={bottomRef} />
             </motion.div>
 

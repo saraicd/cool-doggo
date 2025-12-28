@@ -1,12 +1,16 @@
 "use client";
 import { motion } from "framer-motion";
 import type { StoryEntry } from "../lib/types";
+import { useLanguage } from "../../lib/LanguageContext";
+import { t } from "../../lib/i18n";
 
 interface LatestEntryProps {
   entry: StoryEntry;
 }
 
 export default function LatestEntry({ entry }: LatestEntryProps) {
+  const { language } = useLanguage();
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
@@ -20,7 +24,7 @@ export default function LatestEntry({ entry }: LatestEntryProps) {
             {entry.username}
           </span>
           <span className="text-xs px-2 py-1 bg-purple-200 dark:bg-purple-800 text-purple-700 dark:text-purple-300 rounded-full font-semibold">
-            Latest Entry
+            {t('latestEntry', language)}
           </span>
         </div>
         <span className="text-xs text-gray-600 dark:text-gray-400">

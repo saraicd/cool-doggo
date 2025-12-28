@@ -1,9 +1,11 @@
 "use client";
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { editStoryWithEditCode, APIError } from '../lib/api';
-import type { StoryStatus, EditLimitedData } from '../lib/types';
-import Button from '../../components/Button';
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { editStoryWithEditCode, APIError } from "../lib/api";
+import type { StoryStatus, EditLimitedData } from "../lib/types";
+import Button from "../../components/Button";
+import { useLanguage } from "../../lib/LanguageContext";
+import { t } from "../../lib/i18n";
 
 interface EditStoryModalProps {
   isOpen: boolean;
@@ -22,8 +24,9 @@ export default function EditStoryModal({
   currentStatus,
   onSuccess,
 }: EditStoryModalProps) {
-  const [stage, setStage] = useState<'auth' | 'edit'>('auth');
-  const [editCode, setEditCode] = useState('');
+  const { language } = useLanguage();
+  const [stage, setStage] = useState<"auth" | "edit">("auth");
+  const [editCode, setEditCode] = useState("");
   const [description, setDescription] = useState(currentDescription);
   const [status, setStatus] = useState<StoryStatus>(currentStatus);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -34,8 +37,16 @@ export default function EditStoryModal({
   // Reset state when modal opens/closes
   useEffect(() => {
     if (isOpen) {
-      setStage('auth');
-      setEditCode('');
+      setStage("auth");
+      // Load edit code from localStorage if available
+      const storageKey = `editCode_${accessCode}`;
+      const storedCode = localStorage.getItem(storageKey);
+      console.log(
+        "Loading edit code from localStorage:",
+        storageKey,
+        storedCode
+      );
+      setEditCode(storedCode || "");
       setDescription(currentDescription);
       setStatus(currentStatus);
       setError(null);
@@ -43,7 +54,7 @@ export default function EditStoryModal({
       setSuccessMessage(null);
       setIsSubmitting(false);
     }
-  }, [isOpen, currentDescription, currentStatus]);
+  }, [isOpen, currentDescription, currentStatus, accessCode]);
 
   const handleClose = () => {
     onClose();
@@ -52,7 +63,7 @@ export default function EditStoryModal({
   const handleAuthSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editCode.trim()) {
-      setError('Please enter an edit code');
+      setError("Please enter an edit code");
       return;
     }
 
@@ -61,32 +72,39 @@ export default function EditStoryModal({
 
     try {
       // Validate edit code by making a minimal API call
+      console.log("HERE");
       // We'll send empty data to just test authentication
       await editStoryWithEditCode(accessCode, {}, editCode.trim());
-      // If successful, move to edit stage
-      setStage('edit');
+      // If successful, save to localStorage and move to edit stage
+      const storageKey = `editCode_${accessCode}`;
+      const codeToSave = editCode.trim();
+      console.log("Saving edit code to localStorage:", storageKey, codeToSave);
+      localStorage.setItem(storageKey, codeToSave);
+      console.log("Saved! Verifying:", localStorage.getItem(storageKey));
+      setStage("edit");
       setError(null);
     } catch (err) {
       if (err instanceof APIError) {
         if (err.status === 401) {
-          setError('Edit code is required');
+          setError("Edit code is required");
         } else if (err.status === 403) {
           setError(
-            'Invalid edit code or this story does not allow edit code access'
+            "Invalid edit code or this story does not allow edit code access"
           );
         } else if (err.status === 404) {
-          setError('Story not found');
+          setError("Story not found");
         } else if (err.status === 400) {
           // 400 might mean validation error, but we sent empty data
           // So if we get here, the edit code was validated
-          // Move to edit stage
-          setStage('edit');
+          // Save to localStorage and move to edit stage
+          localStorage.setItem(`editCode_${accessCode}`, editCode.trim());
+          setStage("edit");
           setError(null);
         } else {
-          setError('An error occurred. Please try again.');
+          setError("An error occurred. Please try again.");
         }
       } else {
-        setError('Network error. Please try again.');
+        setError("Network error. Please try again.");
       }
     } finally {
       setIsSubmitting(false);
@@ -117,20 +135,22 @@ export default function EditStoryModal({
     } catch (err) {
       if (err instanceof APIError) {
         const errorMsg = err.message.toLowerCase();
-        if (errorMsg.includes('description')) {
+        if (errorMsg.includes("description")) {
           setFieldErrors({ description: err.message });
         } else if (err.status === 401 || err.status === 403) {
-          setError('Authentication failed. Please try again with a valid edit code.');
+          setError(
+            "Authentication failed. Please try again with a valid edit code."
+          );
           // Return to auth stage
           setTimeout(() => {
-            setStage('auth');
-            setEditCode('');
+            setStage("auth");
+            setEditCode("");
           }, 2000);
         } else {
           setError(err.message);
         }
       } else {
-        setError('An unexpected error occurred. Please try again.');
+        setError("An unexpected error occurred. Please try again.");
       }
     } finally {
       setIsSubmitting(false);
@@ -158,14 +178,14 @@ export default function EditStoryModal({
             className="bg-purple-50 dark:bg-purple-900/20 rounded-2xl p-6 max-w-md w-full shadow-xl"
             onClick={(e) => e.stopPropagation()}
           >
-            {stage === 'auth' ? (
+            {stage === "auth" ? (
               // Stage 1: Edit Code Authentication
               <>
                 <h2 className="text-2xl font-bold text-purple-700 dark:text-purple-400 mb-2">
-                  Edit Story
+                  {t('editStoryTitle', language)}
                 </h2>
                 <p className="text-gray-600 dark:text-gray-300 mb-6">
-                  Enter the edit code to update this story
+                  {t('enterEditCode', language)}
                 </p>
 
                 <form onSubmit={handleAuthSubmit}>
@@ -176,7 +196,7 @@ export default function EditStoryModal({
                       setEditCode(e.target.value);
                       setError(null);
                     }}
-                    placeholder="Enter edit code"
+                    placeholder={t('editCodePlaceholder', language)}
                     className="w-full px-4 py-3 rounded-xl border border-purple-300 dark:border-purple-700 bg-white dark:bg-purple-900/30 text-gray-900 dark:text-gray-100 focus:border-purple-500 focus:outline-none mb-4"
                     autoFocus
                   />
@@ -195,7 +215,7 @@ export default function EditStoryModal({
                       className="flex-1"
                       disabled={isSubmitting}
                     >
-                      {isSubmitting ? 'Verifying...' : 'Continue'}
+                      {isSubmitting ? t('verifying', language) : t('continue', language)}
                     </Button>
                     <Button
                       type="button"
@@ -204,7 +224,7 @@ export default function EditStoryModal({
                       size="md"
                       className="flex-1"
                     >
-                      Cancel
+                      {t('cancel', language)}
                     </Button>
                   </div>
                 </form>
@@ -213,10 +233,10 @@ export default function EditStoryModal({
               // Stage 2: Edit Form
               <>
                 <h2 className="text-2xl font-bold text-purple-700 dark:text-purple-400 mb-2">
-                  Edit Story
+                  {t('editStoryTitle', language)}
                 </h2>
                 <p className="text-gray-600 dark:text-gray-300 mb-6">
-                  Update the story description and status
+                  {t('updateStoryDescription', language)}
                 </p>
 
                 {error && (
@@ -235,7 +255,7 @@ export default function EditStoryModal({
                   {/* Description Field */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Description
+                      {t('description', language)}
                     </label>
                     <textarea
                       value={description}
@@ -245,8 +265,8 @@ export default function EditStoryModal({
                           ...prev,
                           description: undefined,
                         }));
-                        e.target.style.height = 'auto';
-                        e.target.style.height = e.target.scrollHeight + 'px';
+                        e.target.style.height = "auto";
+                        e.target.style.height = e.target.scrollHeight + "px";
                       }}
                       maxLength={500}
                       rows={3}
@@ -260,27 +280,27 @@ export default function EditStoryModal({
                     <p
                       className={`text-xs mt-1 ${
                         isDescValid
-                          ? 'text-gray-600 dark:text-gray-400'
-                          : 'text-red-600 dark:text-red-400'
+                          ? "text-gray-600 dark:text-gray-400"
+                          : "text-red-600 dark:text-red-400"
                       }`}
                     >
-                      {descCharCount}/500 characters
+                      {descCharCount}/500 {t('characters', language)}
                     </p>
                   </div>
 
                   {/* Status Field */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Status
+                      {t('status', language)}
                     </label>
                     <select
                       value={status}
                       onChange={(e) => setStatus(e.target.value as StoryStatus)}
                       className="w-full px-4 py-3 border border-purple-300 dark:border-purple-700 rounded-3xl focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-purple-900/30 text-gray-900 dark:text-white"
                     >
-                      <option value="active">Active</option>
-                      <option value="completed">Completed</option>
-                      <option value="archived">Archived</option>
+                      <option value="active">{t('statusActive', language)}</option>
+                      <option value="completed">{t('statusCompleted', language)}</option>
+                      <option value="archived">{t('statusArchived', language)}</option>
                     </select>
                   </div>
 
@@ -292,7 +312,7 @@ export default function EditStoryModal({
                       className="flex-1 font-bold"
                       disabled={isSubmitting || !isDescValid}
                     >
-                      {isSubmitting ? 'Saving...' : 'Save Changes'}
+                      {isSubmitting ? t('saving', language) : t('saveChanges', language)}
                     </Button>
                     <Button
                       type="button"
@@ -301,7 +321,7 @@ export default function EditStoryModal({
                       size="md"
                       className="flex-1"
                     >
-                      Cancel
+                      {t('cancel', language)}
                     </Button>
                   </div>
                 </form>

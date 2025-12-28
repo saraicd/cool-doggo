@@ -4,10 +4,13 @@ import { getStories } from "./lib/api";
 import StoryCard from "./components/StoryCard";
 import PageLayout from "../components/PageLayout";
 import type { Story } from "./lib/types";
+import { useLanguage } from "../lib/LanguageContext";
+import { t } from "../lib/i18n";
 
 function StoriesList() {
   const [stories, setStories] = useState<Story[]>([]);
   const [loading, setLoading] = useState(true);
+  const { language } = useLanguage();
 
   useEffect(() => {
     getStories()
@@ -36,10 +39,10 @@ function StoriesList() {
     return (
       <div className="text-center py-20">
         <h2 className="text-2xl font-bold text-gray-600 dark:text-gray-400">
-          No stories available yet.
+          {t('noStoriesAvailable', language)}
         </h2>
         <p className="text-gray-500 dark:text-gray-500 mt-2">
-          Check back soon for new collaborative stories!
+          {t('checkBackSoon', language)}
         </p>
       </div>
     );
@@ -48,13 +51,15 @@ function StoriesList() {
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {stories.map((story, index) => (
-        <StoryCard key={story._id} story={story} index={index} />
+        <StoryCard key={story._id || story.accessCode || index} story={story} index={index} />
       ))}
     </div>
   );
 }
 
 export default function CoolStoryPage() {
+  const { language } = useLanguage();
+
   return (
     <PageLayout>
       <div className="relative min-h-screen">
@@ -74,17 +79,16 @@ export default function CoolStoryPage() {
           <div className="max-w-7xl mx-auto">
             <div className="text-right mb-12">
               <h1 className="text-5xl  text-purple-700 dark:text-purple-400 mb-4">
-                Cool Story
+                {t('coolStoryTitle', language)}
               </h1>
               <p className="text-md text-black dark:text-white   mb-6">
-                Join the collaborative storytelling adventure! Each person adds
-                the next part of the story.
+                {t('coolStorySubtitle', language)}
               </p>
               <a
                 href="/cool-story/about"
                 className="inline-block text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 font-semibold underline"
               >
-                How does this work? →
+                {t('howDoesThisWork', language)} →
               </a>
             </div>
 
