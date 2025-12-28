@@ -1,8 +1,11 @@
 "use client";
 import { motion } from "framer-motion";
 import PageLayout from "../components/PageLayout";
+import { useLanguage } from "../lib/LanguageContext";
+import { t } from "../lib/i18n";
 
 export default function StorePage() {
+  const { language } = useLanguage();
   return (
     <PageLayout>
       <div className="relative min-h-screen">
@@ -29,10 +32,10 @@ export default function StorePage() {
               className="mb-12"
             >
               <h2 className=" text-right md:text-6xl  text-purple-700 dark:text-purple-400 mb-4">
-                Store
+                {t("storeTitle", language)}
               </h2>
               <p className="text-xl text-right text-gray-600 dark:text-gray-300">
-                Merchandise coming soon
+                {t("merchandiseComingSoon", language)}
               </p>
             </motion.div>
 
@@ -45,15 +48,13 @@ export default function StorePage() {
             >
               <div className="space-y-6">
                 <h2 className="text-3xl font-bold text-purple-700 dark:text-purple-400">
-                  Store Not Available Yet
+                  {t("storeNotAvailableYet", language)}
                 </h2>
                 <p className="text-gray-700 dark:text-gray-300 text-lg">
-                  We're working hard to bring you awesome Cool Doggo
-                  merchandise! Check back soon for updates.
+                  {t("workingOnMerchandise", language)}
                 </p>
                 <p className="text-gray-600 dark:text-gray-400">
-                  Stay tuned for exclusive items, limited editions, and more
-                  surprises.
+                  {t("stayTuned", language)}
                 </p>
               </div>
             </motion.div>

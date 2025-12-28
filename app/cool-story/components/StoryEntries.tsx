@@ -2,12 +2,16 @@
 import { motion } from "framer-motion";
 import type { StoryEntry } from "../lib/types";
 import LatestEntry from "./LatestEntry";
+import { useLanguage } from "../../lib/LanguageContext";
+import { t } from "../../lib/i18n";
 
 interface StoryEntriesProps {
   entries: StoryEntry[];
 }
 
 export default function StoryEntries({ entries }: StoryEntriesProps) {
+  const { language } = useLanguage();
+
   if (entries.length === 0) {
     return (
       <div className="text-center py-10 text-gray-500 dark:text-gray-400">
@@ -35,8 +39,8 @@ export default function StoryEntries({ entries }: StoryEntriesProps) {
           {/* Previous story content */}
           <div className="space-y-3 text-gray-700 dark:text-gray-300 leading-relaxed">
             <h3 className="text-sm font-semibold text-purple-600 dark:text-purple-400 mb-3">
-              Previous Story ({previousEntries.length}{" "}
-              {previousEntries.length === 1 ? "entry" : "entries"})
+              {t('previousEntries', language)} ({previousEntries.length}{" "}
+              {previousEntries.length === 1 ? t('entries', language).slice(0, -1) : t('entries', language)})
             </h3>
             <div className="relative">
               {/* Blur overlay */}

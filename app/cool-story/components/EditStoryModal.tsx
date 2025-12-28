@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { editStoryWithEditCode, APIError } from "../lib/api";
 import type { StoryStatus, EditLimitedData } from "../lib/types";
 import Button from "../../components/Button";
+import { useLanguage } from "../../lib/LanguageContext";
+import { t } from "../../lib/i18n";
 
 interface EditStoryModalProps {
   isOpen: boolean;
@@ -22,6 +24,7 @@ export default function EditStoryModal({
   currentStatus,
   onSuccess,
 }: EditStoryModalProps) {
+  const { language } = useLanguage();
   const [stage, setStage] = useState<"auth" | "edit">("auth");
   const [editCode, setEditCode] = useState("");
   const [description, setDescription] = useState(currentDescription);
@@ -179,10 +182,10 @@ export default function EditStoryModal({
               // Stage 1: Edit Code Authentication
               <>
                 <h2 className="text-2xl font-bold text-purple-700 dark:text-purple-400 mb-2">
-                  Edit Story
+                  {t('editStoryTitle', language)}
                 </h2>
                 <p className="text-gray-600 dark:text-gray-300 mb-6">
-                  Enter the edit code to update this story
+                  {t('enterEditCode', language)}
                 </p>
 
                 <form onSubmit={handleAuthSubmit}>
@@ -193,7 +196,7 @@ export default function EditStoryModal({
                       setEditCode(e.target.value);
                       setError(null);
                     }}
-                    placeholder="Enter edit code"
+                    placeholder={t('editCodePlaceholder', language)}
                     className="w-full px-4 py-3 rounded-xl border border-purple-300 dark:border-purple-700 bg-white dark:bg-purple-900/30 text-gray-900 dark:text-gray-100 focus:border-purple-500 focus:outline-none mb-4"
                     autoFocus
                   />
@@ -212,7 +215,7 @@ export default function EditStoryModal({
                       className="flex-1"
                       disabled={isSubmitting}
                     >
-                      {isSubmitting ? "Verifying..." : "Continue"}
+                      {isSubmitting ? t('verifying', language) : t('continue', language)}
                     </Button>
                     <Button
                       type="button"
@@ -221,7 +224,7 @@ export default function EditStoryModal({
                       size="md"
                       className="flex-1"
                     >
-                      Cancel
+                      {t('cancel', language)}
                     </Button>
                   </div>
                 </form>
@@ -230,10 +233,10 @@ export default function EditStoryModal({
               // Stage 2: Edit Form
               <>
                 <h2 className="text-2xl font-bold text-purple-700 dark:text-purple-400 mb-2">
-                  Edit Story
+                  {t('editStoryTitle', language)}
                 </h2>
                 <p className="text-gray-600 dark:text-gray-300 mb-6">
-                  Update the story description and status
+                  {t('updateStoryDescription', language)}
                 </p>
 
                 {error && (
@@ -252,7 +255,7 @@ export default function EditStoryModal({
                   {/* Description Field */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Description
+                      {t('description', language)}
                     </label>
                     <textarea
                       value={description}
@@ -281,23 +284,23 @@ export default function EditStoryModal({
                           : "text-red-600 dark:text-red-400"
                       }`}
                     >
-                      {descCharCount}/500 characters
+                      {descCharCount}/500 {t('characters', language)}
                     </p>
                   </div>
 
                   {/* Status Field */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Status
+                      {t('status', language)}
                     </label>
                     <select
                       value={status}
                       onChange={(e) => setStatus(e.target.value as StoryStatus)}
                       className="w-full px-4 py-3 border border-purple-300 dark:border-purple-700 rounded-3xl focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-purple-900/30 text-gray-900 dark:text-white"
                     >
-                      <option value="active">Active</option>
-                      <option value="completed">Completed</option>
-                      <option value="archived">Archived</option>
+                      <option value="active">{t('statusActive', language)}</option>
+                      <option value="completed">{t('statusCompleted', language)}</option>
+                      <option value="archived">{t('statusArchived', language)}</option>
                     </select>
                   </div>
 
@@ -309,7 +312,7 @@ export default function EditStoryModal({
                       className="flex-1 font-bold"
                       disabled={isSubmitting || !isDescValid}
                     >
-                      {isSubmitting ? "Saving..." : "Save Changes"}
+                      {isSubmitting ? t('saving', language) : t('saveChanges', language)}
                     </Button>
                     <Button
                       type="button"
@@ -318,7 +321,7 @@ export default function EditStoryModal({
                       size="md"
                       className="flex-1"
                     >
-                      Cancel
+                      {t('cancel', language)}
                     </Button>
                   </div>
                 </form>

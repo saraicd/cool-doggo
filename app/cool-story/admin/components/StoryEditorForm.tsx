@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { editStory, APIError } from '../../lib/api';
 import type { Story, StoryStatus, EditStoryData } from '../../lib/types';
 import Button from '../../../components/Button';
+import { useLanguage } from '../../../lib/LanguageContext';
+import { t } from '../../../lib/i18n';
 
 interface StoryEditorFormProps {
   story: Story;
@@ -18,6 +20,7 @@ export default function StoryEditorForm({
   onSuccess,
   onLogout,
 }: StoryEditorFormProps) {
+  const { language } = useLanguage();
   const [title, setTitle] = useState(story.title);
   const [description, setDescription] = useState(story.description);
   const [status, setStatus] = useState<StoryStatus>(story.status);
@@ -94,10 +97,10 @@ export default function StoryEditorForm({
     >
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-2xl font-bold text-purple-700 dark:text-purple-300">
-          Edit Story
+          {t('storyEditor', language)}
         </h3>
         <Button type="button" onClick={onLogout} variant="ghost" size="sm">
-          Logout
+          {t('logout', language)}
         </Button>
       </div>
 
@@ -127,7 +130,7 @@ export default function StoryEditorForm({
       {/* Title Field */}
       <div>
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-          Title *
+          {t('title', language)} *
         </label>
         <input
           type="text"
@@ -152,14 +155,14 @@ export default function StoryEditorForm({
               : 'text-red-600 dark:text-red-400'
           }`}
         >
-          {titleCharCount}/100 characters
+          {titleCharCount}/100 {t('characters', language)}
         </p>
       </div>
 
       {/* Description Field */}
       <div>
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-          Description
+          {t('description', language)}
         </label>
         <textarea
           value={description}
@@ -185,30 +188,30 @@ export default function StoryEditorForm({
               : 'text-red-600 dark:text-red-400'
           }`}
         >
-          {descCharCount}/500 characters
+          {descCharCount}/500 {t('characters', language)}
         </p>
       </div>
 
       {/* Status Field */}
       <div>
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-          Status *
+          {t('status', language)} *
         </label>
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value as StoryStatus)}
           className="w-full px-4 py-3 border border-purple-300 dark:border-purple-700 rounded-3xl focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-purple-900/30 text-gray-900 dark:text-white"
         >
-          <option value="active">Active</option>
-          <option value="completed">Completed</option>
-          <option value="archived">Archived</option>
+          <option value="active">{t('statusActive', language)}</option>
+          <option value="completed">{t('statusCompleted', language)}</option>
+          <option value="archived">{t('statusArchived', language)}</option>
         </select>
       </div>
 
       {/* Max Entries Field */}
       <div>
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-          Max Entries (leave empty for unlimited)
+          {t('maxEntriesLabel', language)}
         </label>
         <input
           type="number"
@@ -234,7 +237,7 @@ export default function StoryEditorForm({
         size="md"
         className="w-full font-bold"
       >
-        {isSubmitting ? 'Saving...' : 'Save Changes'}
+        {isSubmitting ? t('saving', language) : t('saveChanges', language)}
       </Button>
     </motion.form>
   );

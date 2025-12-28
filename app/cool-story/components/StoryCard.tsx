@@ -1,9 +1,11 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import type { Story } from "../lib/types";
 import Button from "../../components/Button";
+import { useLanguage } from "../../lib/LanguageContext";
+import { t } from "../../lib/i18n";
 
 interface StoryCardProps {
   story: Story;
@@ -12,6 +14,7 @@ interface StoryCardProps {
 
 export default function StoryCard({ story, index }: StoryCardProps) {
   const router = useRouter();
+  const { language } = useLanguage();
   const isActive = story.status === "active";
   const [showCodeInput, setShowCodeInput] = useState(false);
   const [inputCode, setInputCode] = useState("");
@@ -44,7 +47,7 @@ export default function StoryCard({ story, index }: StoryCardProps) {
       localStorage.setItem(storageKey, inputCode.trim());
       router.push(`/cool-story/${story.accessCode}`);
     } else {
-      setError("Incorrect access code. Please try again.");
+      setError(t('incorrectAccessCode', language));
       setInputCode("");
     }
   };
@@ -80,7 +83,7 @@ export default function StoryCard({ story, index }: StoryCardProps) {
           <p className="text-gray-500 text-md mb-4">{story.description}</p>
 
           <div className="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400">
-            {story.maxEntries && <span>Max: {story.maxEntries} entries</span>}
+            {story.maxEntries && <span>{t('maxEntries', language)}: {story.maxEntries} {t('entries', language)}</span>}
           </div>
 
           {isActive && (
@@ -90,7 +93,7 @@ export default function StoryCard({ story, index }: StoryCardProps) {
                 size="sm"
                 className="w-full pointer-events-none"
               >
-                Click to contribute →
+                {t('clickToContribute', language)}
               </Button>
             </div>
           )}
@@ -118,7 +121,7 @@ export default function StoryCard({ story, index }: StoryCardProps) {
                 {story.title}
               </h2>
               <p className="text-gray-600 dark:text-gray-300 mb-6">
-                Enter the access code to contribute to this story
+                {t('enterAccessCode', language)}
               </p>
 
               <form onSubmit={handleSubmitCode}>
@@ -129,7 +132,7 @@ export default function StoryCard({ story, index }: StoryCardProps) {
                     setInputCode(e.target.value);
                     setError("");
                   }}
-                  placeholder="Enter access code"
+                  placeholder={t('accessCodePlaceholder', language)}
                   className="w-full px-4 py-3 rounded-xl border border-purple-300 dark:border-purple-700 bg-white dark:bg-purple-900/30 text-gray-900 dark:text-gray-100 focus:border-purple-500 focus:outline-none mb-4"
                   autoFocus
                 />
@@ -147,7 +150,7 @@ export default function StoryCard({ story, index }: StoryCardProps) {
                     size="md"
                     className="flex-1"
                   >
-                    Submit
+                    {t('submit', language)}
                   </Button>
                   <Button
                     type="button"
@@ -156,7 +159,7 @@ export default function StoryCard({ story, index }: StoryCardProps) {
                     size="md"
                     className="flex-1"
                   >
-                    Cancel
+                    {t('cancel', language)}
                   </Button>
                 </div>
               </form>

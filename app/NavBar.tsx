@@ -7,17 +7,21 @@ import BehanceIcon from "./../public/behance.svg";
 import LinkedinIcon from "./../public/linkedin.svg";
 import GitHubIcon from "./../public/gitHub.svg";
 import Footer from "./Footer";
+import LanguageSwitcher from "./components/LanguageSwitcher";
+import { useLanguage } from "./lib/LanguageContext";
+import { t } from "./lib/i18n";
 
 const Navbar = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
+  const { language } = useLanguage();
 
   const navigationItems = [
-    { name: "Home", path: "/home" },
-    { name: "Cool Story", path: "/cool-story" },
-    { name: "About", path: "/cool-story/about" },
-    { name: "Store", path: "/store" },
+    { name: t("home", language), path: "/home" },
+    { name: t("coolStory", language), path: "/cool-story" },
+    { name: t("store", language), path: "/store" },
+    { name: t("about", language), path: "/cool-story/about" },
   ];
 
   const handleNavigate = (path: string) => {
@@ -62,18 +66,18 @@ const Navbar = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="flex-1 py-6 overflow-hidden"
+              className="flex-1 py-6 overflow-hidden flex flex-col"
             >
-              <ul className="space-y-2 px-3">
+              <ul className="space-y-2 px-3 flex-1">
                 {navigationItems.map((item) => {
                   const isActive = pathname === item.path;
                   return (
                     <li key={item.path}>
                       <motion.button
                         onClick={() => handleNavigate(item.path)}
-                        className={`w-full flex items-center justify-center px-4 py-3 transition-all  ${
+                        className={`w-full flex items-center justify-center px-4 py-3 transition-all relative ${
                           isActive
-                            ? "text-purple-400"
+                            ? "text-purple-700"
                             : " text-black dark:text-white"
                         }`}
                         whileHover={{ scale: 1.05 }}
@@ -87,6 +91,11 @@ const Navbar = () => {
                   );
                 })}
               </ul>
+
+              {/* Language Switcher */}
+              <div className="pb-4">
+                <LanguageSwitcher />
+              </div>
             </motion.nav>
           )}
         </AnimatePresence>
