@@ -163,7 +163,7 @@ export default function StoryPage() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="mb-8"
             >
-              <StoryEntries entries={entries} />
+              <StoryEntries entries={entries} status={story.status} />
               <div ref={bottomRef} />
             </motion.div>
 

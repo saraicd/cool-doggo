@@ -17,6 +17,7 @@ export const translations = {
     howDoesThisWork: "How does this work?",
     noStoriesAvailable: "No stories available yet.",
     checkBackSoon: "Check back soon for new collaborative stories!",
+    noEntriesYet: "No entries yet. Be the first to start the story!",
 
     // Story Card
     maxEntries: "Max",
@@ -144,6 +145,7 @@ export const translations = {
     howDoesThisWork: "Como funciona?",
     noStoriesAvailable: "Ainda não há histórias disponíveis.",
     checkBackSoon: "Volta em breve para novas histórias colaborativas!",
+    noEntriesYet: "Ainda não há entradas. Sê o primeiro a começar a história!",
 
     // Story Card
     maxEntries: "Máx",
@@ -268,14 +270,14 @@ export const translations = {
 export type TranslationKey = keyof typeof translations.en;
 
 // Get translation by key
-export function t(key: TranslationKey, lang: Language = "en"): string {
+export function t(key: TranslationKey, lang: Language = "pt"): string {
   return translations[lang][key];
 }
 
 // Language context helpers
 export const getLanguage = (): Language => {
-  if (typeof window === "undefined") return "en";
-  return (localStorage.getItem("language") as Language) || "en";
+  if (typeof window === "undefined") return "pt";
+  return (localStorage.getItem("language") as Language) || "pt";
 };
 
 export const setLanguage = (lang: Language): void => {

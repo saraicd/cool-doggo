@@ -1,11 +1,13 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import Footer from "../Footer";
 import Navbar from "../NavBar";
 import { motion } from "framer-motion";
 
 export default function Home() {
   const router = useRouter();
+  const [videoLoaded, setVideoLoaded] = useState(false);
 
   const handleClick = () => {
     router.push("/cool-story");
@@ -21,7 +23,10 @@ export default function Home() {
           loop
           muted
           playsInline
-          className="fixed top-0 left-0 w-full h-full object-cover -z-10"
+          onLoadedData={() => setVideoLoaded(true)}
+          className={`fixed top-0 left-0 w-full h-full object-cover -z-10 transition-opacity duration-1000 ${
+            videoLoaded ? "opacity-100" : "opacity-0"
+          }`}
         >
           <source src="/videos/Background-home.mp4" type="video/mp4" />
         </video>

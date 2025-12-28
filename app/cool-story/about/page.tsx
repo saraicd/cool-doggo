@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import PageLayout from "../../components/PageLayout";
 import { useRouter } from "next/navigation";
@@ -11,6 +12,7 @@ export default function AboutPage() {
   const router = useRouter();
   const { isDarkMode, toggleTheme } = useTheme();
   const { language } = useLanguage();
+  const [videoLoaded, setVideoLoaded] = useState(false);
 
   const fadeInUp = {
     initial: { opacity: 0, y: 20 },
@@ -35,7 +37,10 @@ export default function AboutPage() {
           loop
           muted
           playsInline
-          className="fixed top-0 left-0 w-full h-full object-cover -z-10"
+          onLoadedData={() => setVideoLoaded(true)}
+          className={`fixed top-0 left-0 w-full h-full object-cover -z-10 transition-opacity duration-1000 ${
+            videoLoaded ? "opacity-100" : "opacity-0"
+          }`}
         >
           <source src="/videos/background-about.mp4" type="video/mp4" />
           <source src="/videos/background-about.webm" type="video/webm" />

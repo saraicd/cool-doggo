@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import PageLayout from "../components/PageLayout";
 import { useLanguage } from "../lib/LanguageContext";
@@ -6,6 +7,8 @@ import { t } from "../lib/i18n";
 
 export default function StorePage() {
   const { language } = useLanguage();
+  const [videoLoaded, setVideoLoaded] = useState(false);
+
   return (
     <PageLayout>
       <div className="relative min-h-screen">
@@ -15,7 +18,10 @@ export default function StorePage() {
           loop
           muted
           playsInline
-          className="fixed top-0 left-0 w-full h-full object-cover -z-10"
+          onLoadedData={() => setVideoLoaded(true)}
+          className={`fixed top-0 left-0 w-full h-full object-cover -z-10 transition-opacity duration-1000 ${
+            videoLoaded ? "opacity-100" : "opacity-0"
+          }`}
         >
           <source src="/videos/background.mp4" type="video/mp4" />
           <source src="/videos/background.webm" type="video/webm" />
