@@ -6,6 +6,7 @@ import PageLayout from "../../components/PageLayout";
 import StoryEntries from "../components/StoryEntries";
 import ContributeForm from "../components/ContributeForm";
 import EditStoryModal from "../components/EditStoryModal";
+import StatusBadge from "../components/StatusBadge";
 import Button from "../../components/Button";
 import { getStory, APIError } from "../lib/api";
 import type { StoryWithEntries } from "../lib/types";
@@ -31,10 +32,13 @@ export default function StoryPage() {
       const data = await getStory(accessCode);
       setStoryData(data);
 
-      // Scroll to bottom after loading to show latest entry
-      setTimeout(() => {
-        bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-      }, 100);
+      // Only scroll to bottom for active stories to show latest entry
+      // Completed stories should start at the top
+      if (data.story.status === "active") {
+        setTimeout(() => {
+          bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+      }
     } catch (err) {
       if (err instanceof APIError) {
         setError(err.message);
@@ -140,16 +144,16 @@ export default function StoryPage() {
 
               {story.description && (
                 <>
-                  <p className="text-lg text-right text-gray-600 dark:text-gray-300">
+                  <p className="text-lg text-right text-gray-600 dark:text-gray-300 mb-2">
                     {story.description}
                   </p>
-                  <div className="flex justify-end mt-2">
+                  <div className="flex justify-end">
                     <Button
                       onClick={() => setShowEditModal(true)}
                       variant="ghost"
                       size="sm"
                     >
-                      {t('editStory', language)}
+                      {t("editStory", language)}
                     </Button>
                   </div>
                 </>

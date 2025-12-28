@@ -23,6 +23,7 @@ export const translations = {
     maxEntries: "Max",
     entries: "entries",
     clickToContribute: "Click to contribute →",
+    clickToView: "Click to view →",
     enterAccessCode: "Enter the access code to contribute to this story",
     incorrectAccessCode: "Incorrect access code. Please try again.",
     accessCodePlaceholder: "Enter access code",
@@ -47,9 +48,12 @@ export const translations = {
     characters: "characters",
     submitContribution: "Submit Contribution",
     submitting: "Submitting...",
-    storyCompleted:
-      "This story has been completed and is no longer accepting contributions.",
+    storyCompleted: "This story has been completed! Enjoy!",
     storyArchived: "This story has been archived.",
+    storyNoLongerAccepting: "This story is no longer accepting contributions.",
+    storyCompletedMessage:
+      "This story is completed, so now you can request an item from our ",
+    visitStore: "Visit Store",
 
     // Edit Story Modal
     editStoryTitle: "Edit Story",
@@ -151,6 +155,7 @@ export const translations = {
     maxEntries: "Máx",
     entries: "entradas",
     clickToContribute: "Clica para contribuir →",
+    clickToView: "Clica para ver →",
     enterAccessCode:
       "Digita o código de acesso para contribuir com esta história",
     incorrectAccessCode:
@@ -177,9 +182,12 @@ export const translations = {
     characters: "caracteres",
     submitContribution: "Enviar Contribuição",
     submitting: "A enviar...",
-    storyCompleted:
-      "Esta história foi concluída e não está mais aceitando contribuições.",
+    storyCompleted: "Esta história foi concluída! ",
     storyArchived: "Esta história foi arquivada.",
+    storyNoLongerAccepting: "Esta história já não aceita mais contribuições.",
+    storyCompletedMessage:
+      "Esta história está concluída, agora podes pedir um item da nossa ",
+    visitStore: "Visitar Store",
 
     // Edit Story Modal
     editStoryTitle: "Editar História",

@@ -130,9 +130,16 @@ export default function ContributeForm({
 
   if (!isActive) {
     return (
-      <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-2xl text-center">
+      <div className="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-2xl border border-purple-700">
         <p className="text-gray-600 dark:text-gray-400">
-          This story is no longer accepting contributions.
+          {t("storyCompletedMessage", language)}{" "}
+          <a
+            href="/store"
+            className="text-purple-700 hover:text-purple-800 dark:hover:text-purple-600 no-underline"
+          >
+            store
+          </a>
+          .
         </p>
       </div>
     );
