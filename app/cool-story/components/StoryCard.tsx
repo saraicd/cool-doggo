@@ -21,8 +21,6 @@ export default function StoryCard({ story, index }: StoryCardProps) {
   const [error, setError] = useState("");
 
   const handleCardClick = () => {
-    if (!isActive) return;
-
     // Check if access code is already stored in localStorage
     const storageKey = `accessCode_${story.accessCode}`;
     const storedCode = localStorage.getItem(storageKey);
@@ -64,14 +62,10 @@ export default function StoryCard({ story, index }: StoryCardProps) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: index * 0.1 }}
-        whileHover={{ scale: isActive ? 1.02 : 1 }}
+        whileHover={{ scale: 1.02 }}
       >
         <div
-          className={`p-6 rounded-2xl border transition-all h-64 flex flex-col ${
-            isActive
-              ? "border-purple-500 hover:border-purple-600 hover:shadow-lg cursor-pointer backdrop-blur-md bg-purple-900/20 dark:bg-purple-900/20"
-              : "border-purple-500 dark:border-gray-600 opacity-60 cursor-not-allowed backdrop-blur-md bg-purple-50/50 dark:bg-gray-900"
-          }`}
+          className="p-6 rounded-2xl border border-purple-500 hover:border-purple-600 hover:shadow-lg cursor-pointer backdrop-blur-md bg-purple-900/20 dark:bg-purple-900/20 transition-all h-64 flex flex-col"
           onClick={handleCardClick}
         >
           <div className="flex items-start mb-3">
@@ -86,17 +80,15 @@ export default function StoryCard({ story, index }: StoryCardProps) {
             {story.maxEntries && <span>{t('maxEntries', language)}: {story.maxEntries} {t('entries', language)}</span>}
           </div>
 
-          {isActive && (
-            <div className="mt-auto">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="w-full pointer-events-none"
-              >
-                {t('clickToContribute', language)}
-              </Button>
-            </div>
-          )}
+          <div className="mt-auto">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="w-full pointer-events-none"
+            >
+              {isActive ? t('clickToContribute', language) : t('clickToView', language)}
+            </Button>
+          </div>
         </div>
       </motion.div>
 
