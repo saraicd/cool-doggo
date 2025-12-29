@@ -1,6 +1,7 @@
 # Cool Story API Documentation
 
 ## Base URL
+
 ```
 https://cool-story-api-production.up.railway.app
 ```
@@ -12,12 +13,16 @@ https://cool-story-api-production.up.railway.app
 This API uses a multi-level authentication system:
 
 ### 1. Access Codes
+
 Each story has a unique **access code** that must be provided when:
+
 - Submitting new entries
 - Accessing story content (reading entries)
 
 ### 2. Edit Codes (Optional)
+
 Stories can optionally have an **edit code** that allows limited editing permissions:
+
 - Update story description
 - Change story status (active/completed/archived)
 - **Cannot** change title, maxEntries, accessCode, or editCode
@@ -25,7 +30,9 @@ Stories can optionally have an **edit code** that allows limited editing permiss
 Edit codes are perfect for giving trusted users (like story recipients) limited control without full admin access.
 
 ### 3. Admin API Key
+
 Full administrative access using the `X-Admin-Key` header:
+
 - Create new stories
 - Full edit permissions (all fields)
 - Manage edit codes
@@ -37,9 +44,11 @@ Full administrative access using the `X-Admin-Key` header:
 ### Health Check
 
 #### `GET /story/test`
+
 Check if the API is running.
 
 **Response:**
+
 ```
 Test successful.
 ```
@@ -49,9 +58,11 @@ Test successful.
 ### Story Management
 
 #### `GET /stories`
+
 Get all available stories.
 
 **Response:**
+
 ```json
 [
   {
@@ -67,19 +78,23 @@ Get all available stories.
 ```
 
 **Status Codes:**
+
 - `200` - Success
 
 ---
 
 #### `POST /story/create`
+
 Create a new story (admin endpoint - requires API key).
 
 **Headers:**
+
 ```
 X-Admin-Key: your-super-secret-admin-key-here
 ```
 
 **Request Body:**
+
 ```json
 {
   "title": "Family Summer Adventure 2025",
@@ -91,6 +106,7 @@ X-Admin-Key: your-super-secret-admin-key-here
 ```
 
 **Fields:**
+
 - `title` (required): Story title (max 100 chars)
 - `description` (optional): Story description (max 500 chars)
 - `accessCode` (required): Unique access code (will be converted to uppercase)
@@ -98,6 +114,7 @@ X-Admin-Key: your-super-secret-admin-key-here
 - `editCode` (optional): Optional code that allows limited editing access (description & status only)
 
 **Response:**
+
 ```json
 {
   "message": "Story created successfully!",
@@ -112,6 +129,7 @@ X-Admin-Key: your-super-secret-admin-key-here
 ```
 
 **Status Codes:**
+
 - `201` - Story created successfully
 - `400` - Missing required fields or access code already exists
 - `401` - Missing admin API key
@@ -119,6 +137,7 @@ X-Admin-Key: your-super-secret-admin-key-here
 - `500` - Server error
 
 **Example (curl):**
+
 ```bash
 curl -X POST https://cool-story-api-production.up.railway.app/story/create \
   -H "Content-Type: application/json" \
@@ -133,6 +152,7 @@ curl -X POST https://cool-story-api-production.up.railway.app/story/create \
 ```
 
 **Example (PowerShell):**
+
 ```powershell
 $headers = @{
     "Content-Type" = "application/json"
@@ -153,19 +173,23 @@ Invoke-RestMethod -Uri "https://cool-story-api-production.up.railway.app/story/c
 ---
 
 #### `PUT /story/:accessCode/edit`
+
 Edit an existing story (admin endpoint - requires API key).
 
 **Note:** This endpoint preserves the story's ID, access code, and creation date. Only the editable fields can be modified.
 
 **Headers:**
+
 ```
 X-Admin-Key: your-super-secret-admin-key-here
 ```
 
 **URL Parameters:**
+
 - `accessCode`: The story's access code (case-insensitive)
 
 **Request Body (all fields optional):**
+
 ```json
 {
   "title": "Family Summer Adventure 2025 - Updated",
@@ -177,6 +201,7 @@ X-Admin-Key: your-super-secret-admin-key-here
 ```
 
 **Fields:**
+
 - `title` (optional): Updated story title (max 100 chars)
 - `description` (optional): Updated story description (max 500 chars)
 - `status` (optional): Story status - must be `'active'`, `'completed'`, or `'archived'`
@@ -184,6 +209,7 @@ X-Admin-Key: your-super-secret-admin-key-here
 - `editCode` (optional): Update or remove edit code (set to empty string or null to remove)
 
 **Response:**
+
 ```json
 {
   "message": "Story updated successfully!",
@@ -202,6 +228,7 @@ X-Admin-Key: your-super-secret-admin-key-here
 ```
 
 **Status Codes:**
+
 - `200` - Story updated successfully
 - `400` - Invalid status value
 - `401` - Missing admin API key
@@ -210,11 +237,13 @@ X-Admin-Key: your-super-secret-admin-key-here
 - `500` - Server error
 
 **Important Notes:**
+
 - When changing status to `'completed'`, the `completedAt` field is automatically set to the current date/time
 - The story's `_id`, `accessCode`, and `createdAt` are never modified
 - Only provide the fields you want to update; omitted fields remain unchanged
 
 **Example (curl):**
+
 ```bash
 curl -X PUT https://cool-story-api-production.up.railway.app/story/FAM-2025/edit \
   -H "Content-Type: application/json" \
@@ -226,6 +255,7 @@ curl -X PUT https://cool-story-api-production.up.railway.app/story/FAM-2025/edit
 ```
 
 **Example (PowerShell):**
+
 ```powershell
 $headers = @{
     "Content-Type" = "application/json"
@@ -242,20 +272,84 @@ Invoke-RestMethod -Uri "https://cool-story-api-production.up.railway.app/story/F
 
 ---
 
+#### `DELETE /story/:accessCode/delete`
+
+Delete a story and all its related entries (admin endpoint - requires API key).
+
+**⚠️ WARNING:** This action is **irreversible**. All story entries will be permanently deleted.
+
+**Headers:**
+
+```
+X-Admin-Key: your-super-secret-admin-key-here
+```
+
+**URL Parameters:**
+
+- `accessCode`: The story's access code (case-insensitive)
+
+**Response:**
+
+```json
+{
+  "message": "Story and all related entries deleted successfully!",
+  "deleted": {
+    "story": {
+      "id": "507f1f77bcf86cd799439011",
+      "title": "Family Summer Adventure 2025",
+      "accessCode": "FAM-2025"
+    },
+    "entriesDeleted": 15
+  }
+}
+```
+
+**Status Codes:**
+
+- `200` - Story and entries deleted successfully
+- `401` - Missing admin API key
+- `403` - Invalid admin API key
+- `404` - Story not found with that access code
+- `500` - Server error
+
+**Example (curl):**
+
+```bash
+curl -X DELETE https://cool-story-api-production.up.railway.app/story/FAM-2025/delete \
+  -H "X-Admin-Key: your-super-secret-admin-key-here"
+```
+
+**Example (PowerShell):**
+
+```powershell
+$headers = @{
+    "X-Admin-Key" = "your-super-secret-admin-key-here"
+}
+
+Invoke-RestMethod -Uri "https://cool-story-api-production.up.railway.app/story/FAM-2025/delete" `
+  -Method Delete -Headers $headers
+```
+
+---
+
 #### `PUT /story/:accessCode/edit-limited`
+
 Edit a story with limited permissions using an edit code.
 
 **Note:** This endpoint allows users with an edit code to update **only** the description and status. They cannot change the title, maxEntries, accessCode, editCode, or ID.
 
 **Headers:**
+
 ```
 X-Edit-Code: EDIT-FAM-2025
 ```
 
 **URL Parameters:**
+
 - `accessCode`: The story's access code (case-insensitive)
 
 **Request Body (at least one field required):**
+
 ```json
 {
   "description": "Updated story description",
@@ -264,10 +358,12 @@ X-Edit-Code: EDIT-FAM-2025
 ```
 
 **Fields:**
+
 - `description` (optional): Updated story description (max 500 chars)
 - `status` (optional): Story status - must be `'active'`, `'completed'`, or `'archived'`
 
 **Response:**
+
 ```json
 {
   "message": "Story updated successfully!",
@@ -284,6 +380,7 @@ X-Edit-Code: EDIT-FAM-2025
 ```
 
 **Status Codes:**
+
 - `200` - Story updated successfully
 - `400` - Invalid status value or no fields provided
 - `401` - Missing edit code
@@ -292,12 +389,14 @@ X-Edit-Code: EDIT-FAM-2025
 - `500` - Server error
 
 **Important Notes:**
+
 - The edit code must be set on the story (via admin create or edit endpoint) for this to work
 - Users with edit codes cannot modify the title, maxEntries, accessCode, or editCode
 - When changing status to `'completed'`, the `completedAt` field is automatically set
 - This is perfect for giving trusted users limited editing ability without full admin access
 
 **Example (curl):**
+
 ```bash
 curl -X PUT https://cool-story-api-production.up.railway.app/story/FAM-2025/edit-limited \
   -H "Content-Type: application/json" \
@@ -309,6 +408,7 @@ curl -X PUT https://cool-story-api-production.up.railway.app/story/FAM-2025/edit
 ```
 
 **Example (PowerShell):**
+
 ```powershell
 $headers = @{
     "Content-Type" = "application/json"
@@ -328,17 +428,21 @@ Invoke-RestMethod -Uri "https://cool-story-api-production.up.railway.app/story/F
 ### Story Entries
 
 #### `GET /story/:accessCode/all`
+
 Get a story with all its entries.
 
 **URL Parameters:**
+
 - `accessCode`: The story's access code (case-insensitive)
 
 **Example:**
+
 ```
 GET /story/FAM-2025/all
 ```
 
 **Response:**
+
 ```json
 {
   "story": {
@@ -368,10 +472,12 @@ GET /story/FAM-2025/all
 ```
 
 **Notes:**
+
 - Entries are sorted by creation date (oldest first)
 - Contact emails are NOT included in the response for privacy
 
 **Status Codes:**
+
 - `200` - Success
 - `404` - Story not found
 - `500` - Server error
@@ -379,17 +485,21 @@ GET /story/FAM-2025/all
 ---
 
 #### `GET /story/:accessCode/latest`
+
 Get the latest entry for a story.
 
 **URL Parameters:**
+
 - `accessCode`: The story's access code (case-insensitive)
 
 **Example:**
+
 ```
 GET /story/FAM-2025/latest
 ```
 
 **Response:**
+
 ```json
 {
   "story": {
@@ -409,9 +519,11 @@ GET /story/FAM-2025/latest
 ```
 
 **Notes:**
+
 - If no entries exist, `latestEntry` will be `null`
 
 **Status Codes:**
+
 - `200` - Success
 - `404` - Story not found
 - `500` - Server error
@@ -419,9 +531,11 @@ GET /story/FAM-2025/latest
 ---
 
 #### `POST /story/entry`
+
 Submit a new story entry.
 
 **Request Body:**
+
 ```json
 {
   "accessCode": "FAM-2025",
@@ -433,6 +547,7 @@ Submit a new story entry.
 ```
 
 **Fields:**
+
 - `accessCode` (required): Story access code
 - `username` (required): Contributor's name (2-50 chars)
 - `contactEmail` (optional): Valid email address (for sending completed story)
@@ -440,6 +555,7 @@ Submit a new story entry.
 - `previousEntryId` (required): ID of the previous entry (use `null` for first entry)
 
 **Response:**
+
 ```json
 {
   "message": "Your contribution has been added!",
@@ -453,6 +569,7 @@ Submit a new story entry.
 ```
 
 **Status Codes:**
+
 - `201` - Entry created successfully
 - `400` - Missing required fields or invalid data
 - `401` - Invalid access code
@@ -462,6 +579,7 @@ Submit a new story entry.
 - `500` - Server error
 
 **Rate Limiting:**
+
 - 1 submission per 15 minutes per IP address
 
 **Race Condition Handling:**
@@ -475,15 +593,168 @@ If you receive a `409` status code, it means someone submitted an entry between 
 ```
 
 You should:
+
 1. Reload the story
 2. Get the new latest entry ID
 3. Retry submission with the updated `previousEntryId`
 
 ---
 
+## 📝 How to Update a Story
+
+There are two ways to update a story, depending on your permissions:
+
+### Option 1: Admin Update (Full Access)
+
+**Who can use this:** Administrators with the admin API key
+
+**What you can update:**
+
+- ✅ Title
+- ✅ Description
+- ✅ Status (active/completed/archived)
+- ✅ Max entries
+- ✅ Edit code (add, change, or remove)
+
+**What you CANNOT change:**
+
+- ❌ Story ID
+- ❌ Access code
+- ❌ Creation date
+
+**How to update:**
+
+1. **Identify what you want to change** - You only need to include the fields you want to update
+
+2. **Make the request:**
+
+```powershell
+# PowerShell example
+$headers = @{
+    "Content-Type" = "application/json"
+    "X-Admin-Key" = "your-admin-api-key-here"
+}
+
+$body = @{
+    maxEntries = 50              # Change max entries
+    description = "New description"  # Update description
+    editCode = "EDIT-CODE-123"   # Add/change edit code
+} | ConvertTo-Json
+
+Invoke-RestMethod -Uri "https://cool-story-api-production.up.railway.app/story/FAM-2025/edit" `
+  -Method Put -Headers $headers -Body $body
+```
+
+```bash
+# curl example
+curl -X PUT https://cool-story-api-production.up.railway.app/story/FAM-2025/edit \
+  -H "Content-Type: application/json" \
+  -H "X-Admin-Key: your-admin-api-key-here" \
+  -d '{
+    "maxEntries": 50,
+    "description": "New description",
+    "editCode": "EDIT-CODE-123"
+  }'
+```
+
+**Important Notes:**
+
+- **Only send the fields you want to update** - Don't include fields you want to keep unchanged
+- **Don't include `_id`, `accessCode`, or `createdAt`** - These are read-only and will cause errors
+- When setting `status` to `"completed"`, the `completedAt` date is automatically set
+- To remove an edit code, set `editCode` to `null` or `""`
+
+**Common Update Scenarios:**
+
+```powershell
+# 1. Mark story as completed
+$body = @{ status = "completed" } | ConvertTo-Json
+
+# 2. Change max entries limit
+$body = @{ maxEntries = 100 } | ConvertTo-Json
+
+# 3. Add an edit code
+$body = @{ editCode = "EDIT-2025" } | ConvertTo-Json
+
+# 4. Update multiple fields at once
+$body = @{
+    title = "Updated Title"
+    description = "Updated description"
+    status = "completed"
+    maxEntries = 75
+} | ConvertTo-Json
+```
+
+---
+
+### Option 2: Limited Update (Edit Code)
+
+**Who can use this:** Users with the story's edit code (not the access code)
+
+**What you can update:**
+
+- ✅ Description
+- ✅ Status (active/completed/archived)
+
+**What you CANNOT change:**
+
+- ❌ Title
+- ❌ Max entries
+- ❌ Edit code
+- ❌ Access code
+- ❌ Story ID
+- ❌ Creation date
+
+**How to update:**
+
+```powershell
+# PowerShell example
+$headers = @{
+    "Content-Type" = "application/json"
+    "X-Edit-Code" = "EDIT-FAM-2025"  # Use edit code, not access code
+}
+
+$body = @{
+    description = "Updated story description"
+    status = "completed"
+} | ConvertTo-Json
+
+Invoke-RestMethod -Uri "https://cool-story-api-production.up.railway.app/story/FAM-2025/edit-limited" `
+  -Method Put -Headers $headers -Body $body
+```
+
+```bash
+# curl example
+curl -X PUT https://cool-story-api-production.up.railway.app/story/FAM-2025/edit-limited \
+  -H "Content-Type: application/json" \
+  -H "X-Edit-Code: EDIT-FAM-2025" \
+  -d '{
+    "description": "Updated story description",
+    "status": "completed"
+  }'
+```
+
+---
+
+### Quick Reference: Update Permissions
+
+| Field       | Admin Update | Edit Code Update |
+| ----------- | ------------ | ---------------- |
+| title       | ✅ Yes       | ❌ No            |
+| description | ✅ Yes       | ✅ Yes           |
+| status      | ✅ Yes       | ✅ Yes           |
+| maxEntries  | ✅ Yes       | ❌ No            |
+| editCode    | ✅ Yes       | ❌ No            |
+| accessCode  | ❌ Never     | ❌ Never         |
+| \_id        | ❌ Never     | ❌ Never         |
+| createdAt   | ❌ Never     | ❌ Never         |
+
+---
+
 ## 🔒 CORS Policy
 
 The API accepts requests from:
+
 - `https://www.cooldoggo.com`
 - `https://cooldoggo.com`
 - `http://localhost:3000` (local development)
@@ -494,14 +765,15 @@ The API accepts requests from:
 ## 📊 Data Models
 
 ### Story
+
 ```typescript
 {
   _id: string;
   title: string;
   description: string;
   accessCode: string;
-  editCode: string | null;  // Optional - allows limited editing if set
-  status: 'active' | 'completed' | 'archived';
+  editCode: string | null; // Optional - allows limited editing if set
+  status: "active" | "completed" | "archived";
   createdAt: Date;
   completedAt: Date | null;
   maxEntries: number | null;
@@ -509,6 +781,7 @@ The API accepts requests from:
 ```
 
 ### Story Entry
+
 ```typescript
 {
   _id: string;
@@ -529,14 +802,16 @@ The API accepts requests from:
 
 ```javascript
 // Get story with all entries
-const response = await fetch('https://cool-story-api-production.up.railway.app/story/FAM-2025/all');
+const response = await fetch(
+  "https://cool-story-api-production.up.railway.app/story/FAM-2025/all"
+);
 const data = await response.json();
 
 console.log(data.story.title); // "Family Summer Adventure 2025"
 console.log(data.entries.length); // Number of entries
 
 // Display entries
-data.entries.forEach(entry => {
+data.entries.forEach((entry) => {
   console.log(`${entry.username}: ${entry.text}`);
 });
 ```
@@ -545,31 +820,36 @@ data.entries.forEach(entry => {
 
 ```javascript
 // First, get the latest entry ID
-const latestResponse = await fetch('https://cool-story-api-production.up.railway.app/story/FAM-2025/latest');
+const latestResponse = await fetch(
+  "https://cool-story-api-production.up.railway.app/story/FAM-2025/latest"
+);
 const latestData = await latestResponse.json();
 const previousId = latestData.latestEntry?._id || null;
 
 // Submit new entry
-const submitResponse = await fetch('https://cool-story-api-production.up.railway.app/story/entry', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    accessCode: 'FAM-2025',
-    username: 'Sarah',
-    contactEmail: 'sarah@example.com', // Optional
-    text: 'The adventure continued as they reached the mountain peak...',
-    previousEntryId: previousId,
-  }),
-});
+const submitResponse = await fetch(
+  "https://cool-story-api-production.up.railway.app/story/entry",
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      accessCode: "FAM-2025",
+      username: "Sarah",
+      contactEmail: "sarah@example.com", // Optional
+      text: "The adventure continued as they reached the mountain peak...",
+      previousEntryId: previousId,
+    }),
+  }
+);
 
 const result = await submitResponse.json();
 
 if (submitResponse.ok) {
-  console.log('Success!', result.message);
+  console.log("Success!", result.message);
 } else {
-  console.error('Error:', result.message);
+  console.error("Error:", result.message);
 }
 ```
 
@@ -578,20 +858,25 @@ if (submitResponse.ok) {
 ```javascript
 async function submitEntryWithRetry(entryData) {
   try {
-    const response = await fetch('https://cool-story-api-production.up.railway.app/story/entry', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(entryData),
-    });
+    const response = await fetch(
+      "https://cool-story-api-production.up.railway.app/story/entry",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(entryData),
+      }
+    );
 
     const result = await response.json();
 
     if (response.status === 409) {
       // Race condition - reload and retry
-      alert('Someone just added to the story! Reloading...');
+      alert("Someone just added to the story! Reloading...");
 
       // Get new latest entry
-      const latestResponse = await fetch(`https://cool-story-api-production.up.railway.app/story/${entryData.accessCode}/latest`);
+      const latestResponse = await fetch(
+        `https://cool-story-api-production.up.railway.app/story/${entryData.accessCode}/latest`
+      );
       const latestData = await latestResponse.json();
 
       // Retry with new previousEntryId
@@ -601,7 +886,7 @@ async function submitEntryWithRetry(entryData) {
 
     return result;
   } catch (error) {
-    console.error('Error submitting entry:', error);
+    console.error("Error submitting entry:", error);
     throw error;
   }
 }
@@ -622,15 +907,15 @@ All error responses follow this format:
 
 **Common Errors:**
 
-| Status Code | Message | Solution |
-|-------------|---------|----------|
-| 400 | "Username is required to contribute" | Provide username field |
-| 400 | "Text must be at least 10 characters long" | Make text longer |
-| 401 | "Invalid access code" | Check the access code is correct |
-| 403 | "This story is completed" | Story is no longer accepting entries |
-| 404 | "Story not found with that access code" | Verify the access code exists |
-| 409 | "Someone already added the next part" | Reload story and retry with new previousEntryId |
-| 429 | "Too many submissions" | Wait 15 minutes before submitting again |
+| Status Code | Message                                    | Solution                                        |
+| ----------- | ------------------------------------------ | ----------------------------------------------- |
+| 400         | "Username is required to contribute"       | Provide username field                          |
+| 400         | "Text must be at least 10 characters long" | Make text longer                                |
+| 401         | "Invalid access code"                      | Check the access code is correct                |
+| 403         | "This story is completed"                  | Story is no longer accepting entries            |
+| 404         | "Story not found with that access code"    | Verify the access code exists                   |
+| 409         | "Someone already added the next part"      | Reload story and retry with new previousEntryId |
+| 429         | "Too many submissions"                     | Wait 15 minutes before submitting again         |
 
 ---
 
@@ -638,32 +923,38 @@ All error responses follow this format:
 
 ```javascript
 // 1. Get all stories
-const stories = await fetch('https://cool-story-api-production.up.railway.app/stories')
-  .then(res => res.json());
+const stories = await fetch(
+  "https://cool-story-api-production.up.railway.app/stories"
+).then((res) => res.json());
 
 // 2. Pick a story
 const storyCode = stories[0].accessCode;
 
 // 3. Get the full story
-const story = await fetch(`https://cool-story-api-production.up.railway.app/story/${storyCode}/all`)
-  .then(res => res.json());
+const story = await fetch(
+  `https://cool-story-api-production.up.railway.app/story/${storyCode}/all`
+).then((res) => res.json());
 
 // 4. Get latest entry ID
-const latest = await fetch(`https://cool-story-api-production.up.railway.app/story/${storyCode}/latest`)
-  .then(res => res.json());
+const latest = await fetch(
+  `https://cool-story-api-production.up.railway.app/story/${storyCode}/latest`
+).then((res) => res.json());
 
 // 5. Submit a new entry
-const result = await fetch('https://cool-story-api-production.up.railway.app/story/entry', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    accessCode: storyCode,
-    username: 'Your Name',
-    contactEmail: 'your@email.com',
-    text: 'Your story contribution here...',
-    previousEntryId: latest.latestEntry?._id || null,
-  }),
-}).then(res => res.json());
+const result = await fetch(
+  "https://cool-story-api-production.up.railway.app/story/entry",
+  {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      accessCode: storyCode,
+      username: "Your Name",
+      contactEmail: "your@email.com",
+      text: "Your story contribution here...",
+      previousEntryId: latest.latestEntry?._id || null,
+    }),
+  }
+).then((res) => res.json());
 
 console.log(result.message); // "Your contribution has been added!"
 ```

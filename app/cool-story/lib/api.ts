@@ -40,7 +40,9 @@ export async function getStories(): Promise<Story[]> {
   const response = await fetch(`${API_BASE}/stories`, {
     cache: 'no-store',
   });
-  return handleResponse<Story[]>(response);
+  const stories = await handleResponse<Story[]>(response);
+  // Filter out archived stories from public view
+  return stories.filter(story => story.status !== 'archived');
 }
 
 export async function getStory(accessCode: string): Promise<StoryWithEntries> {
